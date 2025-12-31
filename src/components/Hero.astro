@@ -1,0 +1,27 @@
+---
+import type { Project } from "../data/projects";
+const { project } = Astro.props as { project: Project };
+---
+<section aria-labelledby="hero-title" class="fade-in">
+  <div id="hero" class="grid gap-4">
+    <h1 id="hero-title" class="h1">
+      {project.name}
+    </h1>
+    <div class="flex flex-wrap items-center gap-3 text-white/60">
+      <span aria-label="Año" class="border border-white/20 rounded-subtle px-2 py-1 text-xs">{project.year}</span>
+      <ul aria-label="Tags" class="flex flex-wrap gap-2">
+        {project.tags.map((t) => (
+          <li class="border border-white/20 rounded-subtle px-2 py-1 text-xs">{t}</li>
+        ))}
+      </ul>
+    </div>
+    <p class="body max-w-3xl text-white/80">
+      {project.desc}
+    </p>
+    <div>
+      <a id="hero-cta" href={project.href} class="inline-flex items-center gap-2 border border-accent/50 text-accent rounded-subtle px-4 py-2 hover:bg-accent/10 focus:bg-accent/10 transition-colors" aria-label="Ver proyecto seleccionado">
+        Ver proyecto →
+      </a>
+    </div>
+  </div>
+</section>

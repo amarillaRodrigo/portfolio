@@ -1,0 +1,57 @@
+---
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+const ownerName = Astro.props.ownerName ?? "Rodrigo";
+const showNameRail = Astro.props.showNameRail ?? false;
+const noPadding = Astro.props.noPadding ?? false;
+---
+<html lang="es" class="bg-black">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="description" content="Portfolio editorial minimalista" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{Astro.props.title ?? "Portfolio"}</title>
+  </head>
+  <body class="min-h-screen bg-black text-white">
+    <a href="#main" class="sr-only focus:not-sr-only focus:px-3 focus:py-2 focus:bg-white/10 focus:shadow-subtle">Saltar al contenido</a>
+    {showNameRail && <div class="name-rail" aria-hidden="true">{ownerName}</div>}
+    <header class="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-black/80 border-b border-white/10">
+      <div class="max-w-6xl mx-auto px-4">
+        <Navbar />
+      </div>
+    </header>
+    <main id="main" class={noPadding ? "max-w-full py-10" : "max-w-6xl mx-auto px-4 py-10"}>
+      <slot />
+    </main>
+    <footer class="mt-16 border-t border-white/10">
+      <div class="max-w-6xl mx-auto px-4 py-8">
+        <Footer />
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .name-rail {
+    position: fixed;
+    left: 16px;
+    top: 96px;
+    bottom: 96px;
+    display: none;
+    align-items: center;
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #b3b3b3;
+    writing-mode: vertical-rl;
+  }
+
+  @media (min-width: 1024px) {
+    .name-rail {
+      display: flex;
+    }
+  }
+</style>

@@ -1,43 +1,70 @@
-# Astro Starter Kit: Minimal
+# Portfolio editorial con Astro + Tailwind
 
-```sh
-npm create astro@latest -- --template minimal
+Un portfolio minimalista con estilo editorial: tipografía grande, grid de fondo sutil y un strip horizontal de proyectos que actualiza el hero.
+
+## Correr el proyecto
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Estructura
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```
+src/
+	layouts/
+		BaseLayout.astro
+	pages/
+		index.astro
+		info.astro
+		archive.astro
+	components/
+		Navbar.astro
+		Hero.astro
+		ProjectStrip.astro
+		ProjectCard.astro
+		Footer.astro
+	data/
+		projects.ts
+	styles/
+		global.css
+public/
+	thumbs/
+		placeholder.svg
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Editar proyectos
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- Abre `src/data/projects.ts` y modifica/añade objetos con la forma:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```ts
+{
+	id: string,
+	name: string,
+	year: string,
+	tags: string[],
+	desc: string,
+	href: string,
+	thumb?: string
+}
+```
 
-## 🧞 Commands
+## Colores y tipografía
 
-All commands are run from the root of the project, from a terminal:
+- Colores base y `accent` en `tailwind.config.mjs`.
+- Tipografía usa system fonts (`fontFamily.sans`), ajustable en `tailwind.config.mjs`.
+- Escalas (`.h1`, `.h2`, `.body`) en `src/styles/global.css`.
+- Fondo con grid sutil definido en `body` dentro de `global.css`.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Accesibilidad y performance
 
-## 👀 Want to learn more?
+- Navegación con teclado, focus visible (`:focus-visible`).
+- Imágenes con `loading="lazy"`.
+- Sin librerías pesadas de animación; IntersectionObserver para aparición.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Rutas
+
+- `/` → Work
+- `/info` → Info
+- `/archive` → Archive

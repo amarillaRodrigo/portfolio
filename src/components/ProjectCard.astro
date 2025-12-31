@@ -1,0 +1,27 @@
+---
+import type { Project } from "../data/projects";
+const { project, selected } = Astro.props as { project: Project; selected?: boolean };
+---
+<article
+  class={`group w-64 shrink-0 border border-white/10 rounded-subtle bg-black/40 hover:bg-accent/5 focus-within:bg-accent/5 transition-colors ${selected ? 'ring-1 ring-accent/60' : ''}`}
+  tabindex="0"
+  role="button"
+  aria-pressed={selected ? 'true' : 'false'}
+  data-project-id={project.id}
+  data-name={project.name}
+  data-year={project.year}
+  data-tags={JSON.stringify(project.tags)}
+  data-desc={project.desc}
+  data-href={project.href}
+>
+  <img src={project.thumb ?? '/thumbs/placeholder.svg'} alt="" loading="lazy" class="w-full h-40 object-cover rounded-t-subtle" />
+  <div class="p-3">
+    <h3 class="text-sm font-semibold">{project.name}</h3>
+    <p class="text-xs text-white/60">{project.year}</p>
+    <ul class="mt-2 flex flex-wrap gap-1">
+      {project.tags.slice(0,3).map((t) => (
+        <li class="text-[11px] border border-white/20 rounded-subtle px-1 py-[2px]">{t}</li>
+      ))}
+    </ul>
+  </div>
+</article>

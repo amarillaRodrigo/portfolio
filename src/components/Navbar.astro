@@ -1,0 +1,120 @@
+---
+const links = [
+  { href: '/trabajos', label: 'Trabajos' },
+  { href: '/info', label: 'Info' },
+  { href: '/archive', label: 'Archive' },
+];
+const current = Astro.url.pathname;
+---
+<nav aria-label="Principal" class="flex items-center h-14">
+  <ul class="flex gap-6 text-sm">
+    {links.map((l) => (
+      <li>
+        <a
+          href={l.href}
+          aria-current={current === l.href ? 'page' : undefined}
+          class="nav-link"
+          data-label={l.label}
+        >
+          <span class="nav-link__text" data-label={l.label}>{l.label}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #b3b3b3;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .nav-link__text {
+    position: relative;
+  }
+
+  .nav-link::before,
+  .nav-link::after {
+    color: #fdff00;
+    font-weight: 700;
+    opacity: 0.2;
+    transition: opacity 150ms ease, transform 150ms ease;
+  }
+
+  .nav-link::before {
+    content: '{';
+    transform: translateX(2px);
+  }
+
+  .nav-link::after {
+    content: '}';
+    transform: translateX(-2px);
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible,
+  .nav-link[aria-current="page"] {
+    color: #e5e5e5;
+  }
+
+  .nav-link:hover::before,
+  .nav-link:hover::after,
+  .nav-link:focus-visible::before,
+  .nav-link:focus-visible::after,
+  .nav-link[aria-current="page"]::before,
+  .nav-link[aria-current="page"]::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .nav-link:focus-visible {
+    outline: 2px solid rgba(253, 255, 0, 0.6);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+</style>
+
+<script>
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const texts = Array.from(document.querySelectorAll('.nav-link__text'));
+
+  texts.forEach((el) => {
+    const original = el.dataset.label || el.textContent || '';
+    let scrambleId;
+
+    const restore = () => {
+      if (scrambleId) {
+        window.clearInterval(scrambleId);
+        scrambleId = undefined;
+      }
+      el.textContent = original;
+    };
+
+    const run = () => {
+      restore();
+      let progress = 0;
+      scrambleId = window.setInterval(() => {
+        const next = original
+          .split('')
+          .map((char, idx) => (idx < progress ? char : alphabet[Math.floor(Math.random() * alphabet.length)]))
+          .join('');
+        el.textContent = next;
+        progress += 1;
+        if (progress > original.length) {
+          restore();
+        }
+      }, 30);
+    };
+
+    el.addEventListener('mouseenter', run);
+    el.addEventListener('focus', run);
+    el.addEventListener('mouseleave', restore);
+    el.addEventListener('blur', restore);
+  });
+</script>

@@ -1,0 +1,146 @@
+---
+import type { Project } from "../data/projects";
+import ProjectCard from "./ProjectCard.astro";
+const { projects, selectedId } = Astro.props as { projects: Project[]; selectedId?: string };
+---
+<section aria-label="Lista de proyectos" class="mt-8 fade-in">
+  <div
+    id="project-strip"
+    class="relative flex gap-4 overflow-x-auto overscroll-x-contain py-2 select-none"
+  >
+    {projects.map((p) => (
+      <ProjectCard project={p} selected={p.id === selectedId} />
+    ))}
+  </div>
+  <script>
+    // @ts-nocheck
+    const strip = document.getElementById('project-strip');
+    if (!strip) {
+      // If strip is missing, do nothing.
+      console.warn('Project strip not found');
+    }
+    const heroTitle = document.getElementById('hero-title');
+    const heroDesc = document.querySelector('#hero .body');
+    const heroYear = document.querySelector('#hero [aria-label="Año"]');
+    const heroTags = document.querySelector('#hero [aria-label="Tags"]');
+    const heroCta = document.getElementById('hero-cta');
+
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    function setSelected(el) {
+      const id = el.getAttribute('data-project-id');
+      strip.querySelectorAll('article').forEach(card => {
+        card.setAttribute('aria-pressed', card === el ? 'true' : 'false');
+        card.classList.toggle('ring-1', card === el);
+        card.classList.toggle('ring-accent/40', card === el);
+      });
+      const name = el.getAttribute('data-name');
+      const year = el.getAttribute('data-year');
+      const tags = JSON.parse(el.getAttribute('data-tags') || '[]');
+      const desc = el.getAttribute('data-desc');
+      const href = el.getAttribute('data-href');
+      if (heroTitle) heroTitle.textContent = name || '';
+      if (heroDesc) heroDesc.textContent = desc || '';
+      if (heroYear) heroYear.textContent = year || '';
+      if (heroTags) {
+        heroTags.innerHTML = '';
+        tags.forEach(t => {
+          const li = document.createElement('li');
+          li.className = 'border border-black/10 rounded-subtle px-2 py-1';
+          li.textContent = t;
+          heroTags.appendChild(li);
+        });
+      }
+      if (heroCta) heroCta.setAttribute('href', href || '#');
+    }
+
+    // Initial selection
+    const firstCard = strip && strip.querySelector ? strip.querySelector('article') : null;
+    if (firstCard) setSelected(firstCard);
+
+    // Hover / focus / click selection
+    strip && strip.addEventListener('mouseover', (e) => {
+      const target = e.target instanceof Element ? e.target : null;
+      const card = target ? target.closest('article') : null;
+      if (card) setSelected(card);
+    });
+    strip && strip.addEventListener('focusin', (e) => {
+      const target = e.target instanceof Element ? e.target : null;
+      const card = target ? target.closest('article') : null;
+      if (card) setSelected(card);
+    });
+    strip && strip.addEventListener('click', (e) => {
+      const target = e.target instanceof Element ? e.target : null;
+      const card = target ? target.closest('article') : null;
+      if (card) setSelected(card);
+    });
+    // Keyboard selection (Enter/Space)
+    strip && strip.addEventListener('keydown', (e) => {
+      const target = e.target instanceof Element ? e.target : null;
+      const card = target ? target.closest('article') : null;
+      if (!card) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setSelected(card);
+      }
+    });
+
+    // Drag to scroll (mouse)
+    strip && strip.addEventListener('mousedown', (e) => {
+      isDown = true;
+      strip.classList.add('cursor-grabbing');
+      startX = e.pageX - strip.offsetLeft;
+      scrollLeft = strip.scrollLeft;
+    });
+    strip && strip.addEventListener('mouseleave', () => {
+      isDown = false;
+      strip.classList.remove('cursor-grabbing');
+    });
+    strip && strip.addEventListener('mouseup', () => {
+      isDown = false;
+      strip.classList.remove('cursor-grabbing');
+    });
+    strip && strip.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - strip.offsetLeft;
+      const walk = (x - startX) * 1; // scroll speed
+      strip.scrollLeft = scrollLeft - walk;
+    });
+
+    // Touch drag
+    let touchStartX = 0;
+    let touchScrollLeft = 0;
+    strip && strip.addEventListener('touchstart', (e) => {
+      const t = e.touches[0];
+      touchStartX = t.pageX - strip.offsetLeft;
+      touchScrollLeft = strip.scrollLeft;
+    });
+    strip && strip.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      const x = t.pageX - strip.offsetLeft;
+      const walk = (x - touchStartX) * 1;
+      strip.scrollLeft = touchScrollLeft - walk;
+    });
+
+    // Wheel vertical to horizontal
+    strip && strip.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        strip.scrollBy({ left: e.deltaY, behavior: 'smooth' });
+      }
+    }, { passive: false });
+
+    // IntersectionObserver for visibility
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach((el) => io.observe(el));
+  </script>
+</section>
