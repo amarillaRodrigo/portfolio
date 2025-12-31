@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
 ---
 <BaseLayout title="Home" ownerName="Rodrigo Amarilla" showNameRail={false} noPadding={true}>
   <section id="home-section">
@@ -37,33 +38,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <!-- Sección de proyectos tipo tren -->
   <section id="projects-train">
     <div class="train-container">
-      <!-- Vagón 1 -->
-      <div class="project-wagon">
-        <div class="wagon-content">
-          <p>Proyecto 1</p>
-        </div>
-      </div>
-      
-      <!-- Vagón 2 -->
-      <div class="project-wagon">
-        <div class="wagon-content">
-          <p>Proyecto 2</p>
-        </div>
-      </div>
-      
-      <!-- Vagón 3 -->
-      <div class="project-wagon">
-        <div class="wagon-content">
-          <p>Proyecto 3</p>
-        </div>
-      </div>
-      
-      <!-- Vagón 4 -->
-      <div class="project-wagon">
-        <div class="wagon-content">
-          <p>Proyecto 4</p>
-        </div>
-      </div>
+      {projects.slice(0, 4).map((project) => (
+        <a href={project.href} class="project-wagon">
+          <div class="wagon-content">
+            <h3 class="project-name">{project.name}</h3>
+            <p class="project-year">{project.year}</p>
+            <div class="project-tags">
+              {project.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
     </div>
   </section>
 </BaseLayout>
@@ -181,6 +168,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     transition: all 300ms ease;
+    text-decoration: none;
+    display: block;
   }
 
   .project-wagon:hover {
@@ -193,15 +182,45 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     padding: 2rem;
     height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
+    gap: 0.75rem;
   }
 
-  .wagon-content p {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 1rem;
+  .project-name {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  .project-year {
+    color: rgba(253, 255, 0, 0.8);
+    font-size: 0.75rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    margin: 0;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .tag {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
   }
 
   /* Responsive para proyectos */

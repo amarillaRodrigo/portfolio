@@ -10,6 +10,15 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: 'sigeled',
+    name: 'Sigeled',
+    year: '2024',
+    tags: ['React', 'Node.js', 'PostgreSQL'],
+    desc: 'Sistema de Gestión de Legajos Docentes. Plataforma integral para digitalizar y automatizar la administración documental del personal educativo.',
+    href: '/proyectos/sigeled',
+    thumb: '/thumbs/placeholder.svg',
+  },
+  {
     id: 'p-001',
     name: 'Editorial Grid Study',
     year: '2024',
