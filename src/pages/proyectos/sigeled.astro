@@ -24,46 +24,43 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="content-section">
         <h2>Descripción del Proyecto</h2>
         <p>
-          SIGELED (Sistema de Gestión de Legajos Docentes) es una <strong>plataforma web integral, digital y segura</strong>, 
-          destinada a automatizar, centralizar y optimizar la administración documental y contractual en el sistema 
-          educativo de la provincia de Formosa, Argentina.
-        </p>
-        <p>
-          En el contexto educativo actual, las instituciones enfrentan la necesidad de modernizar sus procesos administrativos 
-          y reducir la carga operativa vinculada a la gestión de legajos y contratos del personal docente y no docente.
+          SIGELED es una <strong>plataforma web integral diseñada para digitalizar y centralizar la gestion de legajos y contratos</strong> del personal docente y no docente en instituciones educativas. El sistema reduce la carga adiministrativa, mejora trazabilidad de la informacion y optimiza procesos internos mediante automatizacion y control de acceso. 
         </p>
       </div>
 
       <div class="content-section">
         <h2>Problema que Resuelve</h2>
-        <p>Las instituciones educativas públicas y privadas enfrentan grandes desafíos administrativos:</p>
+        <p>Las instituciones suelen operar con:</p>
         <ul class="features-list">
-          <li>Dependencia de procesos manuales y legajos en papel</li>
-          <li>Duplicación de datos y pérdida de documentos</li>
-          <li>Falta de trazabilidad y control de versiones en contratos</li>
-          <li>Dificultades en gestión de vencimientos y renovaciones</li>
-          <li>Escasa integración con otros sistemas institucionales</li>
+          <li>Procesos manuales y documentación en papel.</li>
+          <li>Duplicación de datos y pérdida de informacion.</li>
+          <li>Falta de control de versiones y vencimientos contractuales.</li>
+          <li>Baja integración entre areas y sistemas.</li>
         </ul>
       </div>
 
       <div class="content-section">
-        <h2>Módulos Principales</h2>
+        <h2>Funcionalidades Principales</h2>
         <div class="modules-grid">
           <div class="module-card">
             <h3>Gestión de Legajos</h3>
-            <p>Centraliza toda la información del personal docente y no docente. Digitaliza documentos (DNI, CUIL, títulos, contratos, recibos) y los organiza automáticamente por persona.</p>
+            <p>Carga, organización y trazabilidad de documentación personal y contractual.</p>
           </div>
           <div class="module-card">
             <h3>Portal del Colaborador</h3>
-            <p>Permite al docente o empleado autogestionar su información personal y contractual, mejorando la transparencia y reduciendo la carga administrativa.</p>
+            <p>Autogestión de datos personales y contratos.</p>
           </div>
           <div class="module-card">
-            <h3>Módulo de Contratos (CLM)</h3>
-            <p>Automatiza el ciclo de vida completo del contrato: creación, firma, seguimiento y vencimiento. Incluye plantillas parametrizables y firma electrónica.</p>
+            <h3>Gestion de contratos (CLM)</h3>
+            <p>Creación, seguimiento y control de vencimientos con alertas automáticas.</p>
           </div>
           <div class="module-card">
-            <h3>Resoluciones y Reportes</h3>
-            <p>Genera resoluciones mensuales consolidadas. Exporta reportes en PDF/CSV con filtros por período, carrera o estado.</p>
+            <h3>Reportes y resoluciones</h3>
+            <p>Generación de reportes en PDF/CSV con filtros por período y estado.</p>
+          </div>
+          <div class="module-card">
+            <h3>Seguridad y auditoría</h3>
+            <p>Control de accesos por roles y registro de acciones.</p>
           </div>
         </div>
       </div>
@@ -73,15 +70,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         <div class="tech-grid">
           <div class="tech-card">
             <h3>Frontend</h3>
-            <p>React.js con diseño responsive</p>
+            <p>React</p>
           </div>
           <div class="tech-card">
             <h3>Backend</h3>
-            <p>Node.js con Express</p>
+            <p>Node.js + Express</p>
           </div>
           <div class="tech-card">
             <h3>Base de Datos</h3>
-            <p>PostgreSQL + Supabase</p>
+            <p>PostgreSQL (Supabase)</p>
           </div>
           <div class="tech-card">
             <h3>Almacenamiento</h3>
@@ -89,7 +86,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </div>
           <div class="tech-card">
             <h3>APIs</h3>
-            <p>RESTful APIs para integración</p>
+            <p>REST</p>
           </div>
           <div class="tech-card">
             <h3>Seguridad</h3>
@@ -99,33 +96,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       </div>
 
       <div class="content-section">
-        <h2>Beneficios</h2>
+        <h2>Rol y aportes personales</h2>
+        <h4>Backend Developer / Coordinación técnica</h4>
         <ul class="features-list">
-          <li><strong>Eficiencia Operativa:</strong> Reducción de tiempos administrativos y tareas repetitivas</li>
-          <li><strong>Seguridad:</strong> Protección de datos personales y cumplimiento de normativas</li>
-          <li><strong>Sostenibilidad:</strong> Reducción del uso de papel y costos asociados</li>
-          <li><strong>Transparencia:</strong> Auditoría completa y trazabilidad de cada acción</li>
-          <li><strong>Accesibilidad:</strong> Consulta instantánea desde cualquier dispositivo</li>
-          <li><strong>Modernización:</strong> Digitalización integral de la gestión educativa</li>
-        </ul>
-      </div>
-
-      <div class="content-section">
-        <h2>Equipo de Desarrollo</h2>
-        <div class="team-grid">
-          <div class="team-member">
-            <h3>Rodrigo Amarilla</h3>
-            <p>Backend Developer • Coordinación general, planificación y desarrollo de API</p>
-          </div>
-          <div class="team-member">
-            <h3>Matias Orrego</h3>
-            <p>Backend Developer • Base de datos y lógica de negocio</p>
-          </div>
-          <div class="team-member">
-            <h3>Juan Quiroga</h3>
-            <p>Frontend Developer • Implementación de interfaces y UX/UI</p>
-          </div>
-        </div>
+          <li>Diseño e implementación de APIs REST.</li>
+          <li>Desarrollo de lógica de negocio y validaciones.</li>
+          <li>Modelado de base de datos relacional.</li>
+          <li>Coordinación técnica y planificación del desarrollo backend.</li>
+          <li>Integración con frontend y almacenamiento en la nube.</li>
       </div>
 
       <div class="content-section">
