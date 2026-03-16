@@ -1,0 +1,311 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Task Tracker - Proyecto" ownerName="Rodrigo Amarilla">
+  <article class="project-detail">
+    <header class="project-header">
+      <div class="header-content">
+        <a href="/trabajos" class="back-link">← Volver a Trabajos</a>
+        <h1 class="project-title">Task Tracker</h1>
+        <p class="project-subtitle">Minimalist Daily Task Tracker</p>
+        <div class="project-meta">
+          <span class="meta-item">2025</span>
+          <span class="meta-separator">•</span>
+          <span class="meta-item">Next.js</span>
+          <span class="meta-separator">•</span>
+          <span class="meta-item">Fastify</span>
+          <span class="meta-separator">•</span>
+          <span class="meta-item">Full-Stack</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="project-content">
+      <div class="content-section">
+        <h2>Descripción del Proyecto</h2>
+        <p>
+          Task Tracker es un <strong>gestor de tareas diarias minimalista con cuenta regresiva en vivo hasta el fin del día</strong>. Construido como un monorepo pnpm fullstack, incluye una REST API, una versión CLI y un frontend web — desplegado en Render y Vercel con una base de datos PostgreSQL administrada en Neon.
+        </p>
+      </div>
+
+      <div class="content-section">
+        <h2>Arquitectura del Monorepo</h2>
+        <div class="modules-grid">
+          <div class="module-card">
+            <h3>apps/api</h3>
+            <p>REST API construida con Fastify v5 + TypeBox para validación de schemas, Prisma 7 como ORM y PostgreSQL en Neon. Desplegada en Render.</p>
+          </div>
+          <div class="module-card">
+            <h3>apps/web</h3>
+            <p>Frontend con Next.js 16 App Router y Tailwind CSS v4. Interfaz minimalista con countdown en tiempo real al fin del día. Desplegada en Vercel.</p>
+          </div>
+          <div class="module-card">
+            <h3>apps/cli</h3>
+            <p>Versión de línea de comandos con almacenamiento en JSON. Proyecto de práctica para roadmap.sh.</p>
+          </div>
+          <div class="module-card">
+            <h3>packages/core</h3>
+            <p>Tipos TypeScript compartidos entre todas las apps del workspace.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section">
+        <h2>Stack Tecnológico</h2>
+        <div class="tech-grid">
+          <div class="tech-card">
+            <h3>Frontend</h3>
+            <p>Next.js 16 · React 19 · Tailwind CSS v4</p>
+          </div>
+          <div class="tech-card">
+            <h3>Backend</h3>
+            <p>Fastify v5 · TypeBox · Prisma 7</p>
+          </div>
+          <div class="tech-card">
+            <h3>Base de Datos</h3>
+            <p>PostgreSQL (Neon)</p>
+          </div>
+          <div class="tech-card">
+            <h3>Lenguaje</h3>
+            <p>TypeScript</p>
+          </div>
+          <div class="tech-card">
+            <h3>Monorepo</h3>
+            <p>pnpm workspaces</p>
+          </div>
+          <div class="tech-card">
+            <h3>Deploy</h3>
+            <p>Vercel (web) · Render (api)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section">
+        <h2>Ver el Proyecto</h2>
+        <div class="project-links">
+          <a href="https://task-tracker-web-two.vercel.app" target="_blank" rel="noopener noreferrer" class="primary-link">
+            Ver App en Vivo →
+          </a>
+          <a href="https://github.com/amarillaRodrigo/task_tracker" target="_blank" rel="noopener noreferrer" class="secondary-link">
+            Ver en GitHub →
+          </a>
+        </div>
+        <p class="link-note">
+          <strong>Nota:</strong> La API está desplegada en Render (plan gratuito). La primera carga puede tardar unos segundos mientras el servidor se activa.
+        </p>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-detail {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .project-header {
+    margin-bottom: 3rem;
+  }
+
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .back-link {
+    color: rgba(253, 255, 0, 0.9);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 150ms ease;
+  }
+
+  .back-link:hover {
+    color: #fdff00;
+  }
+
+  .project-title {
+    font-size: 3rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .project-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  .meta-separator {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .project-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .content-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .content-section p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tech-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .tech-card h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(253, 255, 0, 0.9);
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .tech-card p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .module-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .module-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(253, 255, 0, 0.9);
+    margin: 0 0 0.75rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .module-card p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .primary-link,
+  .secondary-link {
+    display: inline-block;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.9rem;
+    transition: all 200ms ease;
+  }
+
+  .primary-link {
+    background: rgba(253, 255, 0, 0.1);
+    border: 2px solid rgba(253, 255, 0, 0.3);
+    color: rgba(253, 255, 0, 0.9);
+  }
+
+  .primary-link:hover {
+    background: rgba(253, 255, 0, 0.15);
+    border-color: rgba(253, 255, 0, 0.6);
+    color: #fdff00;
+    transform: translateY(-2px);
+  }
+
+  .secondary-link {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .secondary-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .link-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .link-note strong {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  @media (max-width: 768px) {
+    .project-title {
+      font-size: 2rem;
+    }
+
+    .tech-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .primary-link,
+    .secondary-link {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

@@ -19,12 +19,12 @@ export const projects: Project[] = [
     thumb: '/thumbs/placeholder.svg',
   },
   {
-    id: 'p-001',
-    name: 'Editorial Grid Study',
-    year: '2024',
-    tags: ['UI', 'Editorial', 'CSS'],
-    desc: 'Exploración de layouts editoriales con tipografías grandes y grid sutil.',
-    href: '/work/editorial-grid-study',
+    id: 'task-tracker',
+    name: 'Task Tracker',
+    year: '2025',
+    tags: ['Next.js', 'Fastify', 'PostgreSQL'],
+    desc: 'A minimalist daily task tracker with a live countdown to end of day. Fullstack pnpm monorepo with REST API, CLI, and web frontend.',
+    href: '/proyectos/task-tracker',
     thumb: '/thumbs/placeholder.svg',
   },
   {
