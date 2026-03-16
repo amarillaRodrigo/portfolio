@@ -12,7 +12,7 @@ export const projects: Project[] = [
   {
     id: 'sigeled',
     name: 'Sigeled',
-    year: '2024',
+    year: '2025',
     tags: ['React', 'Node.js', 'PostgreSQL'],
     desc: 'Sistema de Gestión de Legajos Docentes. Plataforma integral para digitalizar y automatizar la administración documental del personal educativo.',
     href: '/proyectos/sigeled',
@@ -21,7 +21,7 @@ export const projects: Project[] = [
   {
     id: 'task-tracker',
     name: 'Task Tracker',
-    year: '2025',
+    year: '2026',
     tags: ['Next.js', 'Fastify', 'PostgreSQL'],
     desc: 'A minimalist daily task tracker with a live countdown to end of day. Fullstack pnpm monorepo with REST API, CLI, and web frontend.',
     href: '/proyectos/task-tracker',
