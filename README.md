@@ -46,7 +46,6 @@ src/
     index.astro               # Redirección a /trabajos
     trabajos.astro            # Página principal con carrete de proyectos
     info.astro                # Información personal
-    archive.astro             # Archivo de proyectos
     proyectos/
       sigeled.astro           # Detalle del proyecto Sigeled
   components/
@@ -108,7 +107,6 @@ La fuente Work Sans se importa en `src/styles/global.css`:
 - `/` → Redirige a `/trabajos`
 - `/trabajos` → Página principal con proyectos
 - `/info` → Información personal
-- `/archive` → Archivo de proyectos
 - `/proyectos/[id]` → Detalle de proyecto específico
 
 ## ✨ Efectos Especiales
