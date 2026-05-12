@@ -10,6 +10,15 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: 'multi-container-app',
+    name: 'Multi-Container App',
+    year: '2026',
+    tags: ['Docker', 'Terraform', 'CI/CD'],
+    desc: 'API de TODOs en Node.js dockerizada con CI/CD (GitHub Actions), infraestructura como código (Terraform, Ansible) y proxy Nginx.',
+    href: '/proyectos/multi-container-app',
+    thumb: '/thumbs/placeholder.svg',
+  },
+  {
     id: 'sigeled',
     name: 'Sigeled',
     year: '2025',

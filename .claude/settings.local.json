@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add src/data/projects.ts src/pages/proyectos/task-tracker.astro)",
+      "Bash(git commit:*)",
+      "Bash(git push origin master)",
+      "Bash(git add src/data/projects.ts src/pages/proyectos/task-tracker.astro src/pages/proyectos/sigeled.astro)"
+    ]
+  }
+}
