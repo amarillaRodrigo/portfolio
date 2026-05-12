@@ -1,26 +1,39 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { profileInfoContent } from "../data/profileInfoContent";
 ---
 <BaseLayout title="Info">
   <section class="grid gap-8 fade-in">
-    <h1 class="h1">Sobre este trabajo</h1>
+    <h1 class="h1">Sobre mí</h1>
     <div class="grid md:grid-cols-3 gap-6">
-      <div class="md:col-span-2">
-        <p class="body text-white/80">
-          Portfolio editorial minimalista. Tipografías grandes, mucho espacio y foco en claridad.
-          Sin frameworks en el cliente por defecto, sólo vanilla JS donde hace falta.
-        </p>
-        <p class="body mt-4 text-white/80">
-          Accesibilidad básica: navegación con teclado, estados de foco visibles y roles adecuados.
-        </p>
+      <div class="md:col-span-2 space-y-6">
+        <div>
+          <h2 class="h2 text-2xl">Resumen profesional</h2>
+          <p class="body mt-3 text-white/80">{profileInfoContent.resumen}</p>
+        </div>
+
+        <div>
+          <h2 class="h2 text-2xl">Forma de trabajo</h2>
+          <ol class="mt-3 space-y-2 text-sm text-white/80">
+            {profileInfoContent.formaDeTrabajar.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ol>
+        </div>
+
+        <div>
+          <h2 class="h2 text-2xl">Stack principal</h2>
+          <p class="body mt-3 text-white/80">{profileInfoContent.stackPrincipal.join(', ')}</p>
+        </div>
       </div>
+
       <aside class="space-y-3">
         <div class="border border-white/10 rounded-subtle p-3">
           <h2 class="h2 text-xl">Contacto</h2>
           <ul class="mt-2 text-sm text-white/70">
-            <li><a class="text-accent hover:underline" href="mailto:example@email.com">example@email.com</a></li>
-            <li><a class="text-accent hover:underline" href="https://linkedin.com" rel="noopener" target="_blank">LinkedIn</a></li>
-            <li><a class="text-accent hover:underline" href="https://github.com" rel="noopener" target="_blank">GitHub</a></li>
+            <li><a class="text-accent hover:underline" href={profileInfoContent.contacto.emailHref}>{profileInfoContent.contacto.email}</a></li>
+            <li><a class="text-accent hover:underline" href={profileInfoContent.contacto.linkedin} rel="noopener" target="_blank">LinkedIn</a></li>
+            <li><a class="text-accent hover:underline" href={profileInfoContent.contacto.github} rel="noopener" target="_blank">GitHub</a></li>
           </ul>
         </div>
         <div class="border border-white/10 rounded-subtle p-3">
