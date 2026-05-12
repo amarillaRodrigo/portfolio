@@ -1,3 +1,324 @@
 ---
-return Astro.redirect('/trabajos');
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
 ---
+<BaseLayout title="Home" ownerName="Rodrigo Amarilla" showNameRail={false} noPadding={true}>
+  <section id="home-section">
+    <!-- Column 1: Name (left edge) -->
+    <div class="name-column">
+      <h1 id="home-first" class="name-text">
+        BIENVENIDO
+      </h1>
+      <h1 id="home-last" class="name-text">
+        
+      </h1>
+    </div>
+
+    <!-- Column 2: Title -->
+    <div class="info-column">
+      <p class="info-text">
+        Desarrollador de<br />Software
+      </p>
+    </div>
+
+    <!-- Column 3: Location & Time -->
+    <div class="info-column">
+      <p class="info-text">
+        Buenos Aires, Argentina
+      </p>
+      <p id="current-time" class="info-text">
+        --:--:--
+      </p>
+    </div>
+
+    <!-- Column 4: Empty spacer -->
+    <div></div>
+  </section>
+
+  <!-- Sección de proyectos tipo tren -->
+  <section id="projects-train">
+    <div class="train-container">
+      {projects.slice(0, 4).map((project) => (
+        <a href={project.href} class="project-wagon">
+          <div class="wagon-content">
+            <h3 class="project-name">{project.name}</h3>
+            <p class="project-year">{project.year}</p>
+            <div class="project-tags">
+              {project.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  #home-section {
+    display: grid;
+    grid-template-columns: auto auto auto 1fr;
+    gap: 6rem;
+    align-items: center;
+    min-height: 62vh;
+    padding-left: 2rem;
+    padding-right: 4rem;
+    padding-top: 2rem;
+  }
+
+  .name-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .name-text {
+    font-size: 5rem;
+    font-weight: 300;
+    color: white;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  .info-column {
+    padding-bottom: 0.5rem;
+    margin-left: 18rem;
+  }
+
+  .info-column:nth-child(3) {
+    padding-left: 0.5rem;
+  }
+
+  .info-text {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .info-text:first-child {
+    line-height: 1.6;
+    margin-bottom: 0.3rem;
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    #home-section {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .name-text {
+      font-size: 3.5rem;
+    }
+
+    .info-column {
+      margin-left: 0;
+      padding-left: 0;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    #home-section {
+      gap: 2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      min-height: calc(100vh - 150px);
+    }
+
+    .name-text {
+      font-size: 2.5rem;
+    }
+
+    .info-text {
+      font-size: 0.65rem;
+    }
+  }
+
+  /* Sección de proyectos tipo tren */
+  #projects-train {
+    width: 100%;
+    padding: 1rem 0 1.5rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .train-container {
+    display: flex;
+    gap: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    min-width: max-content;
+  }
+
+  .project-wagon {
+    flex: 0 0 auto;
+    width: 350px;
+    height: 240px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 300ms ease;
+    text-decoration: none;
+    display: block;
+  }
+
+  .project-wagon:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(253, 255, 0, 0.3);
+    transform: translateY(-4px);
+  }
+
+  .wagon-content {
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .project-name {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  .project-year {
+    color: rgba(253, 255, 0, 0.8);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .tag {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  /* Responsive para proyectos */
+  @media (max-width: 1024px) {
+    .train-container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .project-wagon {
+      width: 350px;
+      height: 280px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    #projects-train {
+      padding: 2rem 0;
+    }
+
+    .train-container {
+      gap: 1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .project-wagon {
+      width: 280px;
+      height: 220px;
+    }
+  }
+</style>
+
+<script>
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const firstEl = document.getElementById('home-first');
+  const lastEl = document.getElementById('home-last');
+  const welcomeText = 'BIENVENIDO';
+  const firstText = 'RODRIGO';
+  const lastText = 'AMARILLA';
+  let animationDone = false;
+
+  const decodify = (firstContent, lastContent, callback) => {
+    const fullText = firstContent + ' ' + lastContent;
+    let progress = 0;
+    const decodeInterval = setInterval(() => {
+      const firstPart = firstContent
+        .split('')
+        .map((char, idx) => {
+          if (char === ' ') return ' ';
+          return idx < progress ? char : alphabet[Math.floor(Math.random() * alphabet.length)];
+        })
+        .join('');
+      
+      const lastPart = lastContent
+        .split('')
+        .map((char, idx) => {
+          return (idx + firstContent.length) < progress ? char : alphabet[Math.floor(Math.random() * alphabet.length)];
+        })
+        .join('');
+      
+      firstEl.textContent = firstPart;
+      lastEl.textContent = lastPart;
+      progress += 1;
+      
+      if (progress > fullText.length) {
+        clearInterval(decodeInterval);
+        firstEl.textContent = firstContent;
+        lastEl.textContent = lastContent;
+        if (callback) callback();
+      }
+    }, 40);
+  };
+
+  // Iniciar con texto codificado
+  firstEl.textContent = welcomeText;
+  lastEl.textContent = '';
+  
+  // Decodificar BIENVENIDO
+  setTimeout(() => {
+    decodify(welcomeText, '', () => {
+      // Después de BIENVENIDO, hacer pausa y luego mostrar RODRIGO AMARILLA
+      setTimeout(() => {
+        decodify(firstText, lastText);
+      }, 300);
+    });
+  }, 100);
+
+  function updateTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const timeEl = document.getElementById('current-time');
+    if (timeEl) {
+      timeEl.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+</script>
