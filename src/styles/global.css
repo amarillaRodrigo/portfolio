@@ -75,3 +75,7 @@
 .js .fade-in {
   @apply opacity-0 translate-y-2 transition-all duration-500 ease-out;
 }
+
+.js .fade-in.is-visible {
+  @apply opacity-100 translate-y-0;
+}
