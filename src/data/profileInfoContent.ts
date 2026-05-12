@@ -45,9 +45,9 @@ export const profileInfoContent: ProfileInfoContent = {
     'Disfruto convertir problemas complejos en soluciones simples y explicarlas de forma directa.',
   contacto: {
     primario: 'email',
-    email: 'rodrigo.amarilla.dev@gmail.com',
-    emailHref: 'mailto:rodrigo.amarilla.dev@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/rodrigo-amarilla/',
+    email: 'amarillarodrigo14@gmail.com',
+    emailHref: 'mailto:amarillarodrigo14@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/rodrigoamarilla/',
     github: 'https://github.com/amarillaRodrigo',
   },
 };
