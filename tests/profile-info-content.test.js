@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { profileInfoContent } from '../src/data/profileInfoContent';
 
-describe('contenido de perfil para Info', () => {
+describe('contenido de perfil para Contacto', () => {
   it('expone un objeto completo sin placeholders', () => {
     expect(profileInfoContent).toMatchObject({
       resumen: expect.any(String),
