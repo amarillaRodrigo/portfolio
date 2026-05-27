@@ -10,6 +10,15 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: 'postulado',
+    name: 'PostulaDo',
+    year: '2026',
+    tags: ['NestJS', 'Prisma', 'PostgreSQL'],
+    desc: 'Backend robusto para gestión de usuarios y postulaciones con RBAC y ownership guards.',
+    href: '/postulado',
+    thumb: '/thumbs/placeholder.svg',
+  },
+  {
     id: 'multi-container-app',
     name: 'Multi-Container App',
     year: '2026',

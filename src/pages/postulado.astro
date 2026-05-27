@@ -1,0 +1,128 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout title="PostulaDo - Proyecto" ownerName="Rodrigo Amarilla">
+  <article class="project-detail">
+    <header class="project-header">
+      <div class="header-content">
+        <a href="/" class="back-link">← Volver a Inicio</a>
+        <h1 class="project-title">PostulaDo</h1>
+        <p class="project-subtitle">Gestión de Usuarios y Postulaciones</p>
+        <div class="project-meta">
+          <span class="meta-item">2026</span>
+          <span class="meta-separator">•</span>
+          <span class="meta-item">NestJS</span>
+          <span class="meta-separator">•</span>
+          <span class="meta-item">Prisma</span>
+          <span class="meta-separator">•</span>
+          <span class="meta-item">Backend</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="project-content">
+      <div class="content-section">
+        <h2>Descripción del Proyecto</h2>
+        <p>
+          <strong>PostulaDo</strong> es un sistema backend robusto diseñado para la gestión de usuarios y postulaciones. Actualmente cuenta con una arquitectura basada en <strong>NestJS</strong> y utiliza <strong>Prisma</strong> como ORM conectado a una base de datos PostgreSQL. El sistema implementa seguridad avanzada mediante autenticación por JWT, control de acceso basado en roles (RBAC) y guards de propiedad (ownership) para asegurar que los usuarios solo puedan modificar sus propios recursos.
+        </p>
+        <br/>
+        <p>
+          <em>Roadmap: Se encuentra en planificación el desarrollo de una interfaz frontend y el despliegue de toda la arquitectura en la nube.</em>
+        </p>
+      </div>
+
+      <div class="content-section">
+        <h2>Stack Tecnológico</h2>
+        <div class="tech-grid">
+          <div class="tech-card">
+            <h3>Framework</h3>
+            <p>NestJS (Node.js + TypeScript)</p>
+          </div>
+          <div class="tech-card">
+            <h3>Base de Datos</h3>
+            <p>PostgreSQL</p>
+          </div>
+          <div class="tech-card">
+            <h3>ORM</h3>
+            <p>Prisma</p>
+          </div>
+          <div class="tech-card">
+            <h3>Seguridad</h3>
+            <p>JWT, Passport, Guards personalizados</p>
+          </div>
+          <div class="tech-card">
+            <h3>Testing</h3>
+            <p>Jest (Unit & E2E)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section">
+        <h2>Ver el Código</h2>
+        <div class="project-links">
+          <a href="https://github.com/amarillaRodrigo/postulado" target="_blank" rel="noopener noreferrer" class="primary-link">
+            Ver Repositorio en GitHub →
+          </a>
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-detail { max-width: 900px; margin: 0 auto; }
+  .project-header { margin-bottom: 3rem; }
+  .header-content { display: flex; flex-direction: column; gap: 1rem; }
+  .back-link {
+    color: rgba(253, 255, 0, 0.9); text-decoration: none; font-size: 0.9rem;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+    transition: color 150ms ease;
+  }
+  .back-link:hover { color: #fdff00; }
+  .project-title {
+    font-size: 3rem; font-weight: 600; color: white; margin: 0;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .project-subtitle { font-size: 1.25rem; color: rgba(255, 255, 255, 0.7); margin: 0; }
+  .project-meta { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .meta-item {
+    color: rgba(255, 255, 255, 0.6); font-size: 0.85rem; text-transform: uppercase;
+    letter-spacing: 0.1em; font-weight: 600;
+  }
+  .meta-separator { color: rgba(255, 255, 255, 0.3); }
+  .project-content { display: flex; flex-direction: column; gap: 3rem; }
+  .content-section h2 {
+    font-size: 1.5rem; font-weight: 600; color: white; margin: 0 0 1rem 0;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .content-section p { color: rgba(255, 255, 255, 0.7); line-height: 1.7; margin: 0; }
+  .tech-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;
+  }
+  .tech-card {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px; padding: 1.5rem;
+  }
+  .tech-card h3 {
+    font-size: 0.9rem; font-weight: 600; color: rgba(253, 255, 0, 0.9); margin: 0 0 0.5rem 0;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .tech-card p { font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); margin: 0; }
+  .project-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .primary-link {
+    display: inline-block; padding: 1rem 2rem; background: rgba(253, 255, 0, 0.1);
+    border: 2px solid rgba(253, 255, 0, 0.3); border-radius: 8px; color: rgba(253, 255, 0, 0.9);
+    text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.9rem; transition: all 200ms ease;
+  }
+  .primary-link:hover {
+    background: rgba(253, 255, 0, 0.15); border-color: rgba(253, 255, 0, 0.6);
+    color: #fdff00; transform: translateY(-2px);
+  }
+  @media (max-width: 768px) {
+    .project-title { font-size: 2rem; }
+    .tech-grid { grid-template-columns: 1fr; }
+    .primary-link { width: 100%; text-align: center; }
+  }
+</style>
