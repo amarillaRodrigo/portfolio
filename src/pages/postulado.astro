@@ -13,9 +13,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <span class="meta-separator">•</span>
           <span class="meta-item">NestJS</span>
           <span class="meta-separator">•</span>
-          <span class="meta-item">Prisma</span>
+          <span class="meta-item">AI & Scraping</span>
           <span class="meta-separator">•</span>
-          <span class="meta-item">Backend</span>
+          <span class="meta-item">CI/CD</span>
         </div>
       </div>
     </header>
@@ -24,11 +24,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="content-section">
         <h2>Descripción del Proyecto</h2>
         <p>
-          <strong>PostulaDo</strong> es un sistema backend robusto diseñado para la gestión de usuarios y postulaciones. Actualmente cuenta con una arquitectura basada en <strong>NestJS</strong> y utiliza <strong>Prisma</strong> como ORM conectado a una base de datos PostgreSQL. El sistema implementa seguridad avanzada mediante autenticación por JWT, control de acceso basado en roles (RBAC) y guards de propiedad (ownership) para asegurar que los usuarios solo puedan modificar sus propios recursos.
+          <strong>PostulaDo</strong> es un sistema backend avanzado diseñado para la gestión de postulaciones laborales. Además de su arquitectura base en <strong>NestJS</strong> y <strong>Prisma</strong> (PostgreSQL) con seguridad JWT y RBAC, el sistema incorpora un motor de <strong>Análisis Inteligente de Ofertas</strong>. Mediante Web Scraping y la integración con modelos de lenguaje vía <strong>SGLang</strong> (utilizando XGrammar y RadixAttention), extrae automáticamente requisitos técnicos, responsabilidades y analiza la cultura empresarial desde una URL, generando informes y cover letters personalizados.
         </p>
         <br/>
         <p>
-          <em>Roadmap: Se encuentra en planificación el desarrollo de una interfaz frontend y el despliegue de toda la arquitectura en la nube.</em>
+          Todo el ciclo de vida está asegurado con <strong>Tests de Integración End-to-End (E2E)</strong> aislados en contenedores Docker y flujos automatizados de <strong>CI/CD</strong> mediante GitHub Actions.
+        </p>
+        <br/>
+        <p>
+          <em>Roadmap: Se encuentra en planificación el desarrollo de una interfaz frontend para consumir esta API.</em>
         </p>
       </div>
 
@@ -36,24 +40,28 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <h2>Stack Tecnológico</h2>
         <div class="tech-grid">
           <div class="tech-card">
-            <h3>Framework</h3>
-            <p>NestJS (Node.js + TypeScript)</p>
+            <h3>Framework & ORM</h3>
+            <p>NestJS, Prisma, PostgreSQL</p>
           </div>
           <div class="tech-card">
-            <h3>Base de Datos</h3>
-            <p>PostgreSQL</p>
+            <h3>Inteligencia Artificial</h3>
+            <p>SGLang, XGrammar, RadixAttention</p>
           </div>
           <div class="tech-card">
-            <h3>ORM</h3>
-            <p>Prisma</p>
+            <h3>Scraping</h3>
+            <p>OpenAI SDK, Cheerio</p>
           </div>
           <div class="tech-card">
             <h3>Seguridad</h3>
-            <p>JWT, Passport, Guards personalizados</p>
+            <p>JWT, Passport, Ownership Guards</p>
           </div>
           <div class="tech-card">
             <h3>Testing</h3>
-            <p>Jest (Unit & E2E)</p>
+            <p>Jest E2E Integration (Dockerizados)</p>
+          </div>
+          <div class="tech-card">
+            <h3>DevOps & CI/CD</h3>
+            <p>Docker, Docker Compose, GitHub Actions</p>
           </div>
         </div>
       </div>
