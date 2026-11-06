@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-06T00:00:00.000Z",
+  "generatedAt": "2026-11-06T14:20:00.000Z",
   "title": "Design System: Rodrigo Amarilla — Portfolio",
   "extensions": {
     "colorMeta": {
@@ -44,11 +44,11 @@
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Hero name and page titles. One per viewport."
+        "purpose": "The hero's name. One per viewport."
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Section headings."
+        "purpose": "Page and case-study titles, and section headings."
       },
       "title": {
         "displayName": "Title",
@@ -58,9 +58,21 @@
         "displayName": "Body",
         "purpose": "Running prose. Case studies read at 65-75ch."
       },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Secondary prose: card taglines, button labels, nav links, link text."
+      },
       "label": {
         "displayName": "Label",
-        "purpose": "The margin annotation: stack line, location line, nav links, metadata."
+        "purpose": "The margin annotation: location line, availability line, section titles, year, status."
+      },
+      "micro": {
+        "displayName": "Micro",
+        "purpose": "Tag chips and the smallest metadata."
+      },
+      "diagram": {
+        "displayName": "Diagram",
+        "purpose": "The ASCII architecture blocks only. The one monospace exception in the system, because a box-drawing diagram does not align in a proportional face."
       }
     },
     "shadows": [
@@ -79,7 +91,7 @@
       {
         "name": "duration-color",
         "value": "150ms",
-        "purpose": "Colour and opacity transitions: nav links, braces, borders."
+        "purpose": "Colour and opacity transitions: nav links, braces, borders, buttons."
       },
       {
         "name": "duration-transform",
@@ -94,7 +106,7 @@
       {
         "name": "scramble-step",
         "value": "30ms",
-        "purpose": "Per-character step of the decode/scramble effect on nav labels."
+        "purpose": "Per-character step of the decode/scramble effect on nav labels and the locale switch."
       }
     ],
     "breakpoints": [
@@ -112,17 +124,17 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The site's single primary action. The accent enters on hover; the button itself never moves.",
-      "html": "<a href=\"#\" class=\"ds-btn-primary\">Ver proyecto →</a>",
-      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid rgba(253, 255, 0, 0.3); border-radius: 8px; background: transparent; color: #fdff00; padding: 1rem 2rem; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background-color 150ms ease, border-color 150ms ease; } .ds-btn-primary:hover { background-color: rgba(253, 255, 0, 0.1); border-color: rgba(253, 255, 0, 0.6); } .ds-btn-primary:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
+      "description": "The site's one primary action. The accent enters on hover; the button itself never moves.",
+      "html": "<a href=\"#\" class=\"ds-btn-primary\">Escribirme →</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; border: 1px solid rgba(253, 255, 0, 0.3); border-radius: 8px; background: transparent; color: #fdff00; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease; } .ds-btn-primary:hover { background: rgba(253, 255, 0, 0.1); border-color: rgba(253, 255, 0, 0.6); } .ds-btn-primary:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
     },
     {
-      "name": "Primary Button — Accent Hover Variant",
+      "name": "Secondary Button",
       "kind": "button",
-      "refersTo": "button-primary-hover",
-      "description": "The filled state of the primary action, for the single instance in a viewport that may carry the accent at full strength.",
-      "html": "<a href=\"#\" class=\"ds-btn-accent\">Contactar</a>",
-      "css": ".ds-btn-accent { display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid #fdff00; border-radius: 8px; background: #fdff00; color: #0a0a0a; padding: 1rem 2rem; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background-color 150ms ease, color 150ms ease; } .ds-btn-accent:hover { background: transparent; color: #fdff00; } .ds-btn-accent:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
+      "refersTo": "button-primary",
+      "description": "The repeated instance inside a case study: a hairline outline in muted ink that never competes with the primary.",
+      "html": "<a href=\"#\" class=\"ds-btn-secondary\">Hablemos →</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; background: transparent; color: rgba(255, 255, 255, 0.7); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease; } .ds-btn-secondary:hover { color: #fafafa; border-color: rgba(253, 255, 0, 0.3); } .ds-btn-secondary:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
     },
     {
       "name": "Navigation Link",
@@ -130,7 +142,15 @@
       "refersTo": "link-nav",
       "description": "A nav label wrapped in accent braces that brighten and slide inward on hover, focus or current page.",
       "html": "<a href=\"#\" class=\"ds-nav-link\"><span class=\"ds-nav-text\">Contacto</span></a>",
-      "css": ".ds-nav-link { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; color: #a1a1a1; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.875rem; letter-spacing: 0.01em; text-decoration: none; transition: color 150ms ease; } .ds-nav-link::before, .ds-nav-link::after { color: #fdff00; font-weight: 700; opacity: 0.2; transition: opacity 150ms ease, transform 150ms ease; } .ds-nav-link::before { content: '{'; transform: translateX(2px); } .ds-nav-link::after { content: '}'; transform: translateX(-2px); } .ds-nav-link:hover, .ds-nav-link:focus-visible, .ds-nav-link[aria-current=\"page\"] { color: #e5e5e5; } .ds-nav-link:hover::before, .ds-nav-link:hover::after, .ds-nav-link:focus-visible::before, .ds-nav-link:focus-visible::after, .ds-nav-link[aria-current=\"page\"]::before, .ds-nav-link[aria-current=\"page\"]::after { opacity: 1; transform: translateX(0); } .ds-nav-link:focus-visible { outline: 2px solid rgba(253, 255, 0, 0.6); outline-offset: 3px; border-radius: 6px; }"
+      "css": ".ds-nav-link { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; color: #a1a1a1; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.875rem; letter-spacing: 0.01em; text-decoration: none; transition: color 150ms ease; } .ds-nav-link::before, .ds-nav-link::after { color: #fdff00; font-weight: 700; opacity: 0.2; transition: opacity 150ms ease, transform 150ms ease; } .ds-nav-link::before { content: '{'; transform: translateX(2px); } .ds-nav-link::after { content: '}'; transform: translateX(-2px); } .ds-nav-link:hover, .ds-nav-link:focus-visible, .ds-nav-link[aria-current=\"page\"] { color: #e5e5e5; } .ds-nav-link:hover::before, .ds-nav-link:hover::after, .ds-nav-link:focus-visible::before, .ds-nav-link:focus-visible::after, .ds-nav-link[aria-current=\"page\"]::before, .ds-nav-link[aria-current=\"page\"]::after { opacity: 1; transform: translateX(0); } .ds-nav-link:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
+    },
+    {
+      "name": "Locale Switch",
+      "kind": "nav",
+      "refersTo": "link-nav",
+      "description": "Swaps the locale of the current page and keeps the route: /es/proyectos/journal-api/ becomes /en/work/journal-api/.",
+      "html": "<a href=\"#\" class=\"ds-locale-switch\" lang=\"en\" hreflang=\"en\">English</a>",
+      "css": ".ds-locale-switch { display: inline-flex; align-items: center; gap: 0.35rem; color: #a1a1a1; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.875rem; letter-spacing: 0.01em; text-decoration: none; transition: color 150ms ease; } .ds-locale-switch:hover, .ds-locale-switch:focus-visible { color: #e5e5e5; } .ds-locale-switch:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
     },
     {
       "name": "Tag Chip",
@@ -138,44 +158,44 @@
       "refersTo": "chip-tag",
       "description": "A stack item or metadata tag. Muted, hairline-bordered, never accented except the project year.",
       "html": "<span class=\"ds-chip\">FastAPI</span>",
-      "css": ".ds-chip { display: inline-block; color: #a1a1a1; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; }"
+      "css": ".ds-chip { display: inline-block; color: rgba(255, 255, 255, 0.6); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; }"
     },
     {
       "name": "Project Card",
       "kind": "card",
       "refersTo": "card-project",
-      "description": "A sheet in the horizontal index: thumbnail, name, year and up to three tags. Lifts 2px on hover and takes the accent border.",
-      "html": "<a href=\"#\" class=\"ds-card\"><img src=\"\" alt=\"\" class=\"ds-card-thumb\" /><div class=\"ds-card-body\"><h3 class=\"ds-card-name\">Journal API</h3><p class=\"ds-card-year\">2026</p><ul class=\"ds-card-tags\"><li class=\"ds-chip\">FastAPI</li><li class=\"ds-chip\">AWS</li><li class=\"ds-chip\">Terraform</li></ul></div></a>",
-      "css": ".ds-card { display: block; width: 350px; height: 240px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; overflow: hidden; text-decoration: none; transform: translateY(0); transition: transform 200ms ease, background-color 150ms ease, border-color 150ms ease; } .ds-card:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(253, 255, 0, 0.3); transform: translateY(-2px); } .ds-card:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; } .ds-card-thumb { width: 100%; height: 160px; object-fit: cover; display: block; } .ds-card-body { padding: 0.75rem; } .ds-card-name { margin: 0; color: rgba(255, 255, 255, 0.9); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.875rem; font-weight: 600; } .ds-card-year { margin: 0.25rem 0 0; color: rgba(253, 255, 0, 0.8); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; } .ds-card-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 0.25rem; margin: 0.5rem 0 0; padding: 0; }"
+      "description": "A sheet in the horizontal index: an authored geometric thumbnail, the year, the name and the tags. Lifts 2px on hover and takes the accent border.",
+      "html": "<a href=\"#\" class=\"ds-card\"><img src=\"\" alt=\"\" class=\"ds-card-thumb\" /><div class=\"ds-card-body\"><div class=\"ds-card-meta\"><span class=\"ds-card-year\">2026</span><span class=\"ds-card-name\">Journal API</span></div><p class=\"ds-card-tagline\">Capstone de cloud engineering.</p><ul class=\"ds-card-tags\"><li class=\"ds-chip\">FastAPI</li><li class=\"ds-chip\">AWS</li></ul></div></a>",
+      "css": ".ds-card { display: flex; flex-direction: column; justify-content: space-between; width: 350px; flex: 0 0 auto; overflow: hidden; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; text-decoration: none; transform: translateY(0); transition: transform 200ms ease, background-color 150ms ease, border-color 150ms ease; } .ds-card:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(253, 255, 0, 0.3); transform: translateY(-2px); } .ds-card:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; } .ds-card-thumb { display: block; width: 100%; height: auto; border-bottom: 1px solid rgba(255, 255, 255, 0.1); } .ds-card-body { display: flex; flex-direction: column; gap: 0.75rem; padding: 1.5rem; } .ds-card-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; } .ds-card-year { color: rgba(253, 255, 0, 0.8); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; } .ds-card-name { color: rgba(255, 255, 255, 0.9); font-size: 1.25rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; } .ds-card-tagline { margin: 0; color: rgba(255, 255, 255, 0.7); font-size: 0.875rem; line-height: 1.6; } .ds-card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.25rem 0 0; padding: 0; list-style: none; }"
     },
     {
-      "name": "Container",
+      "name": "Panel",
       "kind": "card",
       "refersTo": "card-project",
       "description": "A bordered block on the sheet: the case-study tech card and the contact box. Flat, hairline-ruled, no shadow.",
       "html": "<div class=\"ds-panel\"><h3 class=\"ds-panel-title\">Cloud e infraestructura</h3><p class=\"ds-panel-body\">AWS · Kubernetes · Terraform · Docker</p></div>",
-      "css": ".ds-panel { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1.5rem; } .ds-panel-title { margin: 0 0 0.5rem; color: rgba(253, 255, 0, 0.9); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; } .ds-panel-body { margin: 0; color: rgba(255, 255, 255, 0.6); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; line-height: 1.6; }"
+      "css": ".ds-panel { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1.5rem; } .ds-panel-title { margin: 0 0 0.5rem; color: rgba(255, 255, 255, 0.5); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; } .ds-panel-body { margin: 0; color: rgba(255, 255, 255, 0.7); font-size: 0.875rem; line-height: 1.6; }"
     },
     {
       "name": "Micro Label",
       "kind": "custom",
       "refersTo": "chip-tag",
       "description": "The margin annotation: uppercase, wide-tracked, muted. The system's voice for metadata.",
-      "html": "<p class=\"ds-label\">Formosa, Argentina — Remote-first</p>",
-      "css": ".ds-label { margin: 0; color: rgba(255, 255, 255, 0.9); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; white-space: nowrap; }"
+      "html": "<p class=\"ds-label\">Formosa, Argentina</p>",
+      "css": ".ds-label { margin: 0; color: rgba(255, 255, 255, 0.9); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; }"
     },
     {
       "name": "Text Link",
       "kind": "button",
       "refersTo": "link-nav",
       "description": "A secondary action in accent, for links that must not read as buttons.",
-      "html": "<a href=\"#\" class=\"ds-text-link\">Ver repositorio →</a>",
-      "css": ".ds-text-link { color: #fdff00; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: opacity 150ms ease; } .ds-text-link:hover { opacity: 0.8; text-decoration: underline; } .ds-text-link:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
+      "html": "<a href=\"#\" class=\"ds-text-link\">Ver el repositorio →</a>",
+      "css": ".ds-text-link { color: #fdff00; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: opacity 150ms ease; } .ds-text-link:hover { opacity: 0.8; text-decoration: underline; } .ds-text-link:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
     }
   ],
   "narrative": {
     "northStar": "Documento Técnico",
-    "overview": "A technical document, printed on black paper, in which a single fluorescent ink marks what matters. The system is a sheet, not a dashboard: one surface (paper), one ink (base), one accent tint (accent), a hairline rule that behaves like a drafting guide, and margins that hold micro-labels in wide-tracked uppercase. Nothing competes for attention, because a technical sheet has one hierarchy — and the accent marks the one thing that matters at that moment.\n\nThe name is not decoration; it is already in the code. global.css labels its own base layer '/* Editorial baseline */'. The colour tokens are named for paper and ink: paper (#0a0a0a) is the sheet, base (#fafafa) is the ink, base.muted is the ink at the foot of the page, paper.subtle is the sheet under the sheet, and accent is the highlighter. The type scale is named h1 / h2 / body — document semantics, not terminal semantics. The 24px grid at 2% opacity is the drawing grid. There is no monospace in the system, no glow, no scanline, no bloom: the uppercase-with-wide-tracking micro-labels are Work Sans set editorial, not a terminal, and boxShadow.subtle (0 1px 2px rgba(0,0,0,0.03)) is the shadow of a lifted sheet, not an instrument light.\n\nThe decode/scramble effect is the system at its most characteristic: text emerging from noise, a metaphor for reading rather than for a machine. The fade-in on scroll is the document entering the reader's field.\n\nDensity is the discipline: one idea per block. If a block asks for two ideas, it is two blocks. The horizontal rail is the index of the file, its sheets ordered by weight; a work-experience entry is a sheet inside the document, not a project in the same tray, because real work does not compete with a portfolio piece.",
+    "overview": "A technical document, printed on black paper, in which a single fluorescent ink marks what matters. The system is a sheet, not a dashboard: one surface (paper), one ink (base), one accent tint (accent), a hairline rule that behaves like a drafting guide, and margins that hold micro-labels in wide-tracked uppercase. Nothing competes for attention, because a technical sheet has one hierarchy — and the accent marks the one thing that matters at that moment.\n\nThe name is not decoration; it is already in the code. global.css labels its own base layer '/* Editorial baseline */'. The colour tokens are named for paper and ink: paper (#0a0a0a) is the sheet, base (#fafafa) is the ink, base.muted is the ink at the foot of the page, paper.subtle is the sheet under the sheet, and accent is the highlighter. The type scale is named h1 / h2 / body — document semantics, not terminal semantics. The 24px grid at 2% opacity is the drawing grid. There is no monospace in the system's prose, no glow, no scanline, no bloom: the uppercase-with-wide-tracking micro-labels are Work Sans set editorial, not a terminal, and boxShadow.subtle (0 1px 2px rgba(0,0,0,0.03)) is the shadow of a lifted sheet, not an instrument light.\n\nThe decode/scramble effect is the system at its most characteristic: text emerging from noise, a metaphor for reading rather than for a machine. The fade-in on scroll is the document entering the reader's field.\n\nDensity is the discipline: one idea per block. If a block asks for two ideas, it is two blocks. The horizontal rail is the index of the file, its sheets ordered by weight; a work-experience entry is a sheet inside the document, not a project in the same tray, because real work does not compete with a portfolio piece.",
     "keyCharacteristics": [
       "One accent ink, used as a highlighter: at most one accented element per viewport.",
       "Flat surfaces separated by hairline rules, not shadows.",
@@ -211,7 +231,7 @@
       },
       {
         "name": "The Uppercase Margin Rule",
-        "body": "Micro-labels are uppercase, tracked wide, 10-11px, and muted. They are never accented — with two exceptions, the year and the status tag.",
+        "body": "Micro-labels are uppercase, tracked wide, 10–11px, and muted. They are never accented — with two exceptions, the year and the status tag.",
         "section": "typography"
       },
       {
@@ -231,7 +251,7 @@
       "Do separate surfaces with a hairline border, and reserve shadow-subtle for something that genuinely floats.",
       "Do move elements at most 2px, and only cards. Buttons do not move.",
       "Do transition colour and opacity in 150ms and transforms in 200ms, and name the properties.",
-      "Do keep uppercase micro-labels at 10-11px, 0.1em tracking, muted — and accent only the year and the status tag.",
+      "Do keep uppercase micro-labels at 10–11px, 0.1em tracking, muted — and accent only the year and the status tag.",
       "Do use the rounded-subtle token (8px) everywhere a radius appears.",
       "Do keep one idea per block; split the block rather than compressing two ideas into one.",
       "Do put the accent only on paper and paper.subtle surfaces, never over base."
@@ -244,7 +264,7 @@
       "Don't grow accented text. A larger or heavier accent is content, not a mark.",
       "Don't add a second focus-ring treatment. One ring, 2px solid accent, 2px offset, everywhere.",
       "Don't use accent.dim (#d6d800). It is defined and has zero uses; it duplicates the accent without adding anything. Remove it.",
-      "Don't introduce a monospace face. The system has one family and the uppercase labels are not terminal output.",
+      "Don't introduce a monospace face. The system has one family and the uppercase labels are not terminal output. The ASCII architecture diagrams are the single exception, and only because a box-drawing diagram does not align in a proportional face.",
       "Don't raise or add motion to a component that does not already move."
     ]
   }
