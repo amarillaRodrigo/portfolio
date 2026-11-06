@@ -65,7 +65,7 @@ const figures = {
     <line x1="456" y1="280" x2="456" y2="296" stroke="#ffffff" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="3 3"/>`,
 
   /** PostulaDo: a pipeline of stages, one marked as the validated output. */
-  postulado: `
+  "postulado": `
     <g stroke="#ffffff" stroke-opacity="0.18" stroke-width="1" fill="none">
       <line x1="176" y1="200" x2="216" y2="200"/>
       <line x1="288" y1="200" x2="328" y2="200"/>
@@ -97,25 +97,6 @@ const figures = {
       <line x1="448" y1="176" x2="448" y2="216"/>
     </g>
     <rect x="264" y="96" width="112" height="48" rx="3" fill="none" stroke="${ACCENT}" stroke-opacity="0.9" stroke-width="1.5"/>`,
-
-  /** Multi-Container App: containers on a host, one pipeline below. */
-  "multi-container-app": `
-    <g fill="none" stroke="#ffffff" stroke-opacity="0.30" stroke-width="1">
-      <rect x="248" y="88" width="144" height="128" rx="3"/>
-      <rect x="272" y="112" width="40" height="40" rx="2"/>
-      <rect x="328" y="112" width="40" height="40" rx="2"/>
-      <rect x="272" y="168" width="96" height="32" rx="2"/>
-    </g>
-    <rect x="272" y="168" width="96" height="32" rx="2" fill="none" stroke="${ACCENT}" stroke-opacity="0.9" stroke-width="1.5"/>
-    <g stroke="#ffffff" stroke-opacity="0.18" stroke-width="1" fill="none">
-      <line x1="152" y1="288" x2="232" y2="288"/>
-      <line x1="320" y1="288" x2="400" y2="288"/>
-    </g>
-    <g fill="none" stroke="#ffffff" stroke-opacity="0.24" stroke-width="1">
-      <rect x="136" y="264" width="32" height="48" rx="3"/>
-      <rect x="232" y="264" width="88" height="48" rx="3"/>
-      <rect x="400" y="264" width="88" height="48" rx="3"/>
-    </g>`,
 };
 
 mkdirSync(OUT_DIR, { recursive: true });

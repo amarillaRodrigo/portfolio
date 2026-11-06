@@ -1,7 +1,6 @@
 ---
-import type { CaseStudy } from "../data/types";
-import type { Locale } from "../data/types";
-import { t } from "../data/ui";
+import type { CaseStudy, Locale } from "../data/types";
+import { ui, t } from "../data/ui";
 
 interface Props {
   project: CaseStudy;
@@ -13,9 +12,17 @@ interface Props {
 const { project, locale, compact = false } = Astro.props;
 const href = locale === "es" ? `/es/proyectos/${project.slug}/` : `/en/work/${project.slug}/`;
 const thumb = `/thumbs/${project.slug}.png`;
+
+/**
+ * The repository is the primary proof, so it leaves the card and stops being
+ * two clicks away. The demo is secondary and only shows when it is verified
+ * live — there is exactly one on this site.
+ */
+const repoLink = project.links.find((l) => l.kind === "repo");
+const demoLink = project.links.find((l) => l.kind === "demo");
 ---
 
-<a href={href} class="project-card" data-slug={project.slug}>
+<article class="project-card" data-slug={project.slug}>
   {
     !compact && (
       <img
@@ -28,21 +35,58 @@ const thumb = `/thumbs/${project.slug}.png`;
       />
     )
   }
+
   <div class="project-card__body">
     <div class="project-card__meta">
       <span class="project-card__year">{project.year}</span>
       <span class="project-card__name">{project.name}</span>
     </div>
+
     {
       !compact && (
         <p class="project-card__tagline">{t(project.tagline, locale)}</p>
       )
     }
+
     <ul class="project-card__tags">
       {project.tags.slice(0, compact ? 3 : 4).map((tag) => <li>{tag}</li>)}
     </ul>
+
+    <div class="project-card__actions">
+      <a class="project-card__cta" href={href}>
+        {t(ui.labels.caseStudy, locale)} →
+      </a>
+
+      {
+        repoLink && (
+          <a
+            class="project-card__link"
+            href={repoLink.href}
+            rel="noopener"
+            target="_blank"
+          >
+            {t(ui.labels.repo, locale)}
+          </a>
+        )
+      }
+
+      {
+        demoLink && (
+          <span class="project-card__live">
+            <a
+              class="project-card__link project-card__link--live"
+              href={demoLink.href}
+              rel="noopener"
+              target="_blank"
+            >
+              {t(ui.labels.liveTag, locale)}
+            </a>
+          </span>
+        )
+      }
+    </div>
   </div>
-</a>
+</article>
 
 <style>
   .project-card {
@@ -71,7 +115,7 @@ const thumb = `/thumbs/${project.slug}.png`;
     transform: translateY(-2px);
   }
 
-  .project-card:focus-visible {
+  .project-card:focus-within {
     outline: 2px solid #fdff00;
     outline-offset: 2px;
   }
@@ -144,6 +188,63 @@ const thumb = `/thumbs/${project.slug}.png`;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
+  }
+
+  .project-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin-top: 0.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .project-card__cta {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .project-card__cta:hover {
+    color: #fdff00;
+  }
+
+  .project-card__cta:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  .project-card__link {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .project-card__link:hover {
+    color: #fafafa;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .project-card__link:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  /* The one live demo on the site. It carries the accent because it is the
+     only thing a visitor can open and use, and the year is already spoken
+     for on this card. */
+  .project-card__live .project-card__link--live {
+    color: #fdff00;
   }
 
   @media (max-width: 640px) {

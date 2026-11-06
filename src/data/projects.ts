@@ -168,11 +168,13 @@ export const projects: CaseStudy[] = [
       {
         href: "https://github.com/amarillaRodrigo/journal-starter",
         label: { es: "Ver el repositorio", en: "View the repository" },
+        kind: "repo",
         primary: true,
       },
       {
         href: "https://github.com/amarillaRodrigo/journal-starter-pipeline",
         label: { es: "Ver el pipeline", en: "View the pipeline" },
+        kind: "pipeline",
       },
     ],
   },
@@ -321,6 +323,7 @@ export const projects: CaseStudy[] = [
       {
         href: "https://github.com/amarillaRodrigo/PostulaDo",
         label: { es: "Ver el repositorio", en: "View the repository" },
+        kind: "repo",
         primary: true,
       },
     ],
@@ -405,96 +408,13 @@ export const projects: CaseStudy[] = [
       {
         href: "https://github.com/amarillaRodrigo/task_tracker",
         label: { es: "Ver el repositorio", en: "View the repository" },
+        kind: "repo",
         primary: true,
       },
       {
         href: "https://task-tracker-web-two.vercel.app",
         label: { es: "Ver la demo", en: "View the live demo" },
-      },
-    ],
-  },
-  {
-    slug: "multi-container-app",
-    name: "Multi-Container App",
-    year: "2026",
-    tags: ["Docker", "Terraform", "Ansible", "Nginx", "GitHub Actions"],
-    tagline: {
-      es: "El ciclo completo de despliegue de una API: contenedorizar, aprovisionar y automatizar.",
-      en: "The full delivery cycle for an API: containerise, provision, automate.",
-    },
-    summary: {
-      es: "API REST de tareas en Node.js y MongoDB, dockerizada con configuración separada para desarrollo y producción, con infraestructura provisionada por Terraform, configuración automatizada con Ansible y un pipeline de GitHub Actions sobre runners self-hosted.",
-      en: "A task REST API on Node.js and MongoDB, containerised with development and production configuration kept separate, infrastructure provisioned by Terraform, configuration automated with Ansible, and a GitHub Actions pipeline on self-hosted runners.",
-    },
-    role: {
-      es: "Autor del proyecto — backend e infraestructura",
-      en: "Sole author — backend and infrastructure",
-    },
-    status: {
-      es: "Código abierto.",
-      en: "Open source.",
-    },
-    tech: [
-      { label: { es: "Backend", en: "Backend" }, value: "Node.js · Express · MongoDB" },
-      { label: { es: "Contenedores", en: "Containers" }, value: "Docker · Docker Compose" },
-      { label: { es: "Infraestructura", en: "Infrastructure" }, value: "Terraform · Vagrant" },
-      { label: { es: "Configuración", en: "Configuration" }, value: "Ansible" },
-      { label: { es: "CI/CD", en: "CI/CD" }, value: "GitHub Actions · runners self-hosted" },
-      { label: { es: "Servidor", en: "Server" }, value: "Nginx como proxy inverso" },
-    ],
-    sections: [
-      {
-        heading: { es: "Problema", en: "Problem" },
-        body: {
-          es: [
-            "El problema no era la API: era el deploy. Un flujo manual de despliegue es difícil de repetir, imposible de auditar y propaga el error de una máquina a la siguiente. El objetivo era convertir un backend funcional en una plataforma desplegable de forma repetible.",
-          ],
-          en: [
-            "The problem was not the API: it was the deploy. A manual deployment flow is hard to repeat, impossible to audit, and carries one machine's mistake into the next. The goal was to turn a working backend into a platform that deploys repeatably.",
-          ],
-        },
-      },
-      {
-        heading: { es: "Enfoque", en: "Approach" },
-        body: {
-          es: [
-            "Dockerización de la API y la base con configuración separada por entorno, de modo que desarrollo tenga hot reload y producción no. Terraform aprovisiona las máquinas; Ansible configura el servidor y despliega; Nginx queda como capa de entrada y enrutamiento.",
-            "Y el pipeline de GitHub Actions hace el build y el push de imágenes a Docker Hub, con el despliegue ejecutándose sobre runners self-hosted a través de los playbooks de Ansible.",
-          ],
-          en: [
-            "The API and the database are containerised with configuration split per environment, so development gets hot reload and production does not. Terraform provisions the machines; Ansible configures the server and deploys; Nginx sits in front as the entry layer and the router.",
-            "And the GitHub Actions pipeline builds and pushes images to Docker Hub, with the deploy running on self-hosted runners through the Ansible playbooks.",
-          ],
-        },
-      },
-      {
-        heading: { es: "Resultado", en: "Result" },
-        body: {
-          es: [
-            "El deploy dejó de ser un procedimiento manual y pasó a ser una entrada de pipeline. La base de infraestructura versionada elimina el drift entre entornos: lo que se desplegó en staging es lo mismo que se despliega en producción, porque es el mismo código de Terraform.",
-          ],
-          en: [
-            "The deploy stopped being a manual procedure and became a pipeline entry. Versioned infrastructure removes the drift between environments: what ran in staging is what runs in production, because it is the same Terraform code.",
-          ],
-        },
-      },
-      {
-        heading: { es: "Límites conocidos", en: "Known limits" },
-        body: {
-          es: [
-            "Los runners self-hosted son una dependencia operativa: alguien tiene que mantenerlos disponibles y actualizados, y un runner caído detiene el pipeline. La versión sobre GitHub Actions usa MongoDB, que no da las mismas garantías de consistencia que una base relacional.",
-          ],
-          en: [
-            "Self-hosted runners are an operational dependency: someone has to keep them available and patched, and a runner going down stops the pipeline. This version uses MongoDB, which does not give the same consistency guarantees as a relational database.",
-          ],
-        },
-      },
-    ],
-    links: [
-      {
-        href: "https://github.com/amarillaRodrigo/multicontainer_todo",
-        label: { es: "Ver el repositorio", en: "View the repository" },
-        primary: true,
+        kind: "demo",
       },
     ],
   },
@@ -508,6 +428,11 @@ export const featuredProjects = projects.filter((p) =>
 /** The compact grid below them. */
 export const otherProjects = projects.filter(
   (p) => !["journal-api", "postulado"].includes(p.slug),
+);
+
+/** The project with a verified live demo. There is exactly one. */
+export const liveProject = otherProjects.find(
+  (p) => p.links.some((l) => l.kind === "demo"),
 );
 
 export function getProject(slug: string): CaseStudy | undefined {

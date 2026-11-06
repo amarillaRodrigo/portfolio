@@ -31,7 +31,8 @@ export const ui = {
   sections: {
     experience: { es: "Experiencia", en: "Experience" },
     featured: { es: "Proyectos destacados", en: "Featured work" },
-    others: { es: "Otros proyectos", en: "Other work" },
+    live: { es: "En vivo", en: "Live" },
+    allProjects: { es: "Proyectos", en: "Work" },
     stack: { es: "Stack", en: "Stack" },
     contact: { es: "Contacto", en: "Get in touch" },
     contactIntro: {
@@ -50,6 +51,7 @@ export const ui = {
     pipeline: { es: "Ver el pipeline", en: "View the pipeline" },
     back: { es: "Volver", en: "Back" },
     caseStudy: { es: "Ver el caso completo", en: "Read the full case study" },
+    liveTag: { es: "Demo en vivo", en: "Live demo" },
     talk: { es: "Hablemos", en: "Get in touch" },
   },
   case: {

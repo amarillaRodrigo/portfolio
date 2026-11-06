@@ -44,3 +44,4 @@ oportunidades/
 # Scripts de inspeccion local (no forman parte del sitio)
 scripts/capture.mjs
 scripts/measure-overflow.mjs
+scripts/measure-nav.mjs

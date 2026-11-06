@@ -62,13 +62,16 @@ Five blocks on the home, in this order:
 1. **HERO** — name, "Backend Engineer", stack on one line, the location line, email CTA, CV download, and the availability statement.
 2. **EXPERIENCIA** — NÓRDICO as its own block, above projects, because it is paid production work and the only proof of Java.
 3. **PROYECTOS DESTACADOS** — Journal API first, PostulaDo second.
-4. **OTROS PROYECTOS** — compact grid: Task Tracker, Multi-Container App.
+4. **EN VIVO** — the one project with a live demo, as its own band rather than a grid cell: a recruiter clicks it and the thing works.
 5. **STACK + CONTACTO** — closing.
 
-**Excluded from the site, deliberately:** Prime State and SIGELED.
+**Excluded from the site, deliberately:** Prime State, SIGELED and Multi-Container App.
 
 - **Prime State** stays a line in the Spanish CV only. The repository is private, has no README and no licence, and publishing it would mean reviewing seven internal documents. It would be a fourth AI project in a portfolio that differentiates itself on Java/Spring and AWS — and the English master CV already excludes it. The site is a curated showcase, not an inventory.
 - **SIGELED** appears in neither master CV, and the site was the last place it was still alive — exactly the incoherence the single-profile-version rule forbids. Its only external link was a demo returning 503. It is a 2025 Prácticas Profesionales project already represented in the CV as "Desarrollador Backend (Prácticas Profesionales) — average 9.66", and does not need a project page of its own.
+- **Multi-Container App** repeats the claim Journal API already makes better. Its whole stack — Docker, Terraform, CI/CD on GitHub Actions — is the same axis as the Journal API's, which does it with 79 Terraform resources, Kubernetes, OIDC and a documented teardown. A second project making the same claim at a fraction of the depth dilutes the one that makes it well. It stays in the CV, where a project list is expected to be complete, and it leaves the site, where it is not.
+
+**Why PostulaDo stays.** NÓRDICO proves Java, not Node: the two do not overlap. PostulaDo is the only project on the site that carries the TypeScript backend (NestJS, BullMQ over Redis, Prisma), the AI layer as a first-class claim (SGLang with XGrammar, output validated against a schema), and a test suite that runs against real PostgreSQL and Redis in Docker Compose. It appears in 10 of the 11 CV tailorings — it is the project that has been carrying applications, not decoration. The site promises TypeScript and Node.js in its stack line, and PostulaDo is what makes that promise true.
 
 ### Link rules
 
@@ -127,7 +130,7 @@ Every number on the site must be measured. No invented metrics.
 
 **Prime State** — enters the site **only if published first**. The repo exists and is healthy (remote configured, on `main`, nothing unpushed, `.env` gitignored and untracked) but it is private, has no README and no licence, and `github.com/amarillaRodrigo/nutri-prime` returns 404. A project with neither repo nor demo is a claim without evidence.
 
-**Task Tracker**, **Multi-Container App**, **SIGELED** — compact grid. SIGELED's demo currently returns **503**; remove it or restore it.
+**Task Tracker** — the "EN VIVO" band on the home, with its live demo and its repository both reachable in one click. Its demo at https://task-tracker-web-two.vercel.app is verified 200.
 
 ### Codebase cleanup (confirmed)
 
@@ -165,8 +168,6 @@ The 2026-11-06 teardown is the best interview material available: build, validat
 - Journal API CI/CD mirror — public. https://github.com/amarillaRodrigo/journal-starter-pipeline
 - PostulaDo — public. https://github.com/amarillaRodrigo/PostulaDo
 - Task Tracker — public, live demo at https://task-tracker-web-two.vercel.app
-- Multi-Container App — public. https://github.com/amarillaRodrigo/multicontainer_todo
-- SIGELED — public repo with a live demo at https://sigeled-frontend.onrender.com, **currently returning 503**
 - Portfolio — public, live at https://rodrigoamarilla.tech
 - Documented teardown procedure with execution record — `journal-starter/docs/cleanup.md`
 
@@ -178,7 +179,7 @@ The 2026-11-06 teardown is the best interview material available: build, validat
 
 - No testimonials, no client logos, no named references. References are available on request.
 - No customer counts, no revenue figures, no adoption metrics.
-- SIGELED's demo is down. Do not advertise it as live.
+- SIGELED's demo is down and the project left the site. Do not advertise it as live.
 - The BSc in Data Science is **in progress**, never completed.
 - The three `microLogros` metrics currently in `profileInfoContent.ts` are unsupported and must be removed, not reworded.
 

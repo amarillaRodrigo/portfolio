@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
 import EmailCta from "../../components/EmailCta.astro";
-import { featuredProjects, otherProjects } from "../../data/projects";
+import { featuredProjects, liveProject } from "../../data/projects";
 import { experiences } from "../../data/experiencia";
 import { site, stack, stackGroups, mailtoHref, cvPath } from "../../data/site";
 import { ui, t } from "../../data/ui";
@@ -103,18 +103,60 @@ const experience = experiences[0];
     </div>
   </section>
 
-  <!-- 4. OTROS PROYECTOS -->
-  <section id="otros" class="block">
-    <h2 class="block__title">{t(ui.sections.others, locale)}</h2>
+  <!-- 4. EN VIVO -->
+  {
+    liveProject && (
+      <section id="en-vivo" class="block">
+        <h2 class="block__title">{t(ui.sections.live, locale)}</h2>
 
-    <div class="others-grid">
-      {
-        otherProjects.map((project) => (
-          <ProjectCard project={project} locale={locale} compact />
-        ))
-      }
-    </div>
-  </section>
+        <div class="live-grid">
+          {
+            liveProject.links
+              .filter((l) => l.kind === "demo")
+              .map((demo) => (
+                <div class="live-demo">
+                  <div class="live-demo__body">
+                    <span class="live-demo__name">{liveProject.name}</span>
+                    <p class="live-demo__tagline">
+                      {t(liveProject.tagline, locale)}
+                    </p>
+                    <ul class="live-demo__tags">
+                      {liveProject.tags.map((tag) => (
+                        <li>{tag}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div class="live-demo__actions">
+                    <a
+                      class="live-demo__cta"
+                      href={demo.href}
+                      rel="noopener"
+                      target="_blank"
+                    >
+                      {t(ui.labels.liveTag, locale)} →
+                    </a>
+
+                    {liveProject.links
+                      .filter((l) => l.kind === "repo")
+                      .map((repo) => (
+                        <a
+                          class="live-demo__repo"
+                          href={repo.href}
+                          rel="noopener"
+                          target="_blank"
+                        >
+                          {t(ui.labels.repo, locale)}
+                        </a>
+                      ))}
+                  </div>
+                </div>
+              ))
+          }
+        </div>
+      </section>
+    )
+  }
 
   <!-- 5. STACK + CONTACTO -->
   <section id="stack" class="block">
@@ -394,16 +436,134 @@ const experience = experiences[0];
     scroll-snap-align: start;
   }
 
-  /* OTHERS */
-  .others-grid {
+  /* EN VIVO */
+  .live-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 1.5rem;
   }
 
-  .others-grid :global(.project-card) {
-    width: auto;
-    min-height: auto;
+  /* The one live demo on the site: a recruiter clicks it and the thing
+     works. It carries the accent because it is the only evidence here a
+     visitor can open and use in three seconds. */
+  .live-demo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(253, 255, 0, 0.3);
+    border-radius: 8px;
+    transform: translateY(0);
+    transition:
+      transform 200ms ease,
+      background-color 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .live-demo:hover {
+    background: rgba(253, 255, 0, 0.05);
+    border-color: rgba(253, 255, 0, 0.6);
+    transform: translateY(-2px);
+  }
+
+  .live-demo:focus-within {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  .live-demo__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .live-demo__name {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .live-demo__tagline {
+    margin: 0;
+    max-width: 52ch;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .live-demo__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .live-demo__tags li {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+  }
+
+  .live-demo__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .live-demo__cta {
+    color: #fdff00;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 150ms ease;
+  }
+
+  .live-demo__cta:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .live-demo__cta:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  .live-demo__repo {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .live-demo__repo:hover {
+    color: #fafafa;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .live-demo__repo:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
   }
 
   /* STACK */

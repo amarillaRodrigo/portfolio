@@ -19,13 +19,12 @@ Todo URL lleva su locale. No hay toggle por `localStorage`: las rutas son reales
 
 | Español | English | Contenido |
 | --- | --- | --- |
-| `/es/` | `/en/` | Home: hero, experiencia, destacados, otros proyectos, stack y contacto |
+| `/es/` | `/en/` | Home: hero, experiencia, destacados, en vivo, stack y contacto |
 | `/es/experiencia/` | `/en/experience/` | NÓRDICO (el repo es privado: no hay link) |
 | `/es/proyectos/` | `/en/work/` | Todos los proyectos |
 | `/es/proyectos/journal-api/` | `/en/work/journal-api/` | Caso de estudio: Journal API |
 | `/es/proyectos/postulado/` | `/en/work/postulado/` | Caso de estudio: PostulaDo |
 | `/es/proyectos/task-tracker/` | `/en/work/task-tracker/` | Caso de estudio: Task Tracker |
-| `/es/proyectos/multi-container-app/` | `/en/work/multi-container-app/` | Caso de estudio: Multi-Container App |
 | `/es/contacto/` | `/en/contact/` | Contacto |
 | `/sitemap.xml` | | Todas las rutas en los dos idiomas |
 | `/robots.txt` | | |

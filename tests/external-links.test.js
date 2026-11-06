@@ -146,6 +146,39 @@ describe("proyectos publicados", () => {
     }
   });
 
+  it("publica solo los proyectos que la curacion dejo", () => {
+    // The site is a curated showcase, not an inventory. These three are the
+    // ones that carry a distinct claim: cloud (Journal API), the Node and
+    // AI layer (PostulaDo), and the only live demo (Task Tracker).
+    //
+    // Multi-Container App was removed because Journal API already proves
+    // Docker, Terraform and CI/CD at far greater depth, so a second project
+    // making the same claim diluted the one that makes it well.
+    expect(projects.map((p) => p.slug).sort()).toEqual([
+      "journal-api",
+      "postulado",
+      "task-tracker",
+    ]);
+  });
+
+  it("el repositorio de cada proyecto es un click desde la tarjeta", () => {
+    for (const project of projects) {
+      expect(
+        project.links.some((l) => l.kind === "repo"),
+        `${project.slug} no expone su repositorio`,
+      ).toBe(true);
+    }
+  });
+
+  it("declara una demo solo cuando existe y esta verificada", () => {
+    const withDemo = projects.filter((p) =>
+      p.links.some((l) => l.kind === "demo"),
+    );
+    // There is exactly one live demo on this site, and it is verified. A
+    // second one would need to be checked before it goes up.
+    expect(withDemo.map((p) => p.slug)).toEqual(["task-tracker"]);
+  });
+
   it("cada proyecto tiene las cinco secciones del caso de estudio", () => {
     for (const project of projects) {
       const headings = project.sections.map((s) => s.heading.es);

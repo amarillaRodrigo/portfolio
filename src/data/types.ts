@@ -21,6 +21,21 @@ export type TechGroup = {
   value: string;
 };
 
+/**
+ * A link on a case study.
+ *
+ * `kind` is what a card reads to decide which action to surface. The
+ * repository is the primary proof; a demo is secondary and only exists when
+ * it is verified live.
+ */
+export type CaseStudyLink = {
+  href: string;
+  label: Localized<string>;
+  kind: "repo" | "demo" | "pipeline";
+  /** Marks the link as the primary action on the page. */
+  primary?: boolean;
+};
+
 export type CaseStudy = {
   slug: string;
   name: string;
@@ -36,10 +51,5 @@ export type CaseStudy = {
   sections: CaseStudySection[];
   /** Optional ASCII diagram, rendered in a pre block. */
   architecture?: Localized<string>;
-  links: {
-    href: string;
-    label: Localized<string>;
-    /** Marks the link as a primary action on the page. */
-    primary?: boolean;
-  }[];
+  links: CaseStudyLink[];
 };
