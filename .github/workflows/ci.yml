@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # The published CVs are committed, so the check runs against them
+      # directly. The verifier from the CV repository is not available here,
+      # so this falls back to the structural checks: the file exists, it is a
+      # PDF, and it is big enough to be a CV.
+      - name: Verify the published CVs
+        run: npm run sync-cv -- --check
+
+      - name: Build
+        run: npm run build:dev
+
+      # The external links are checked here because a CI runner is the one
+      # place that can see the whole set of them at once. LinkedIn is
+      # excluded: it answers 999 to anything that is not a browser session.
+      - name: Test
+        run: npm test
