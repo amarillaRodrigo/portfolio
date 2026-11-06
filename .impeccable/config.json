@@ -1,0 +1,18 @@
+{
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "src/styles/global.css"
+        ],
+        "createdAt": "2026-11-06T13:14:24.270Z",
+        "reason": "User confirmed: the 24px grid is the system's drawing grid, part of the 'Documento Tecnico' metaphor (documented in DESIGN.md under Layout)"
+      }
+    ]
+  }
+}

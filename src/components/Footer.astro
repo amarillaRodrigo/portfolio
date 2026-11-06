@@ -1,6 +1,19 @@
+---
+import { ui, t } from "../data/ui";
+import { site } from "../data/site";
+import type { Locale } from "../data/types";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const year = new Date().getFullYear();
+---
+
 <footer class="text-sm text-white/60">
   <p>
-    © {new Date().getFullYear()} — Portfolio editorial minimal. 
-    <span class="inline-block ml-2">Hecho con Astro + Tailwind.</span>
+    © {year} — {site.name}. {t(ui.footer.location, locale)}.
+    <span class="inline-block ml-2">{t(ui.footer.built, locale)}</span>
   </p>
 </footer>

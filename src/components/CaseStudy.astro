@@ -1,0 +1,359 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EmailCta from "./EmailCta.astro";
+import type { CaseStudy } from "../data/types";
+import type { Locale } from "../data/types";
+import { ui, t } from "../data/ui";
+
+interface Props {
+  project: CaseStudy;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const isEs = locale === "es";
+const backHref = isEs ? "/es/proyectos/" : "/en/work/";
+
+const title = `${project.name} — ${project.year}`;
+const description = t(project.tagline, locale);
+---
+
+<BaseLayout {title} {description} {locale} path={isEs ? `/proyectos/${project.slug}/` : `/work/${project.slug}/`}>
+  <article class="case">
+    <a href={backHref} class="back-link">← {t(ui.labels.back, locale)}</a>
+
+    <header class="case__header">
+      <div class="case__meta">
+        <span class="case__year">{project.year}</span>
+      </div>
+      <h1 class="case__title">{project.name}</h1>
+      <p class="case__summary">{t(project.summary, locale)}</p>
+
+      <dl class="case__facts">
+        <div class="case__fact">
+          <dt>{t(ui.labels.role, locale)}</dt>
+          <dd>{t(project.role, locale)}</dd>
+        </div>
+        <div class="case__fact">
+          <dt>{t(ui.labels.status, locale)}</dt>
+          <dd>{t(project.status, locale)}</dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="case__section">
+      <h2 class="case__section-title">{t(ui.labels.tech, locale)}</h2>
+      <dl class="tech-grid">
+        {
+          project.tech.map((group) => (
+            <div class="tech-card">
+              <dt class="tech-card__label">{t(group.label, locale)}</dt>
+              <dd class="tech-card__value">{group.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    {
+      project.architecture && (
+        <section class="case__section">
+          <h2 class="case__section-title">{t(ui.case.architecture, locale)}</h2>
+          <pre class="architecture">{t(project.architecture, locale)}</pre>
+        </section>
+      )
+    }
+
+    {
+      project.sections.map((section) => (
+        <section class="case__section">
+          <h2 class="case__section-title">{t(section.heading, locale)}</h2>
+          {t(section.body, locale).map((paragraph) => (
+            <p class="case__paragraph">{paragraph}</p>
+          ))}
+          {section.list && (
+            <ul class="case__list">
+              {t(section.list, locale).map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ))
+    }
+
+    <section class="case__section">
+      <h2 class="case__section-title">{t(ui.labels.links, locale)}</h2>
+      <div class="case__links">
+        {project.links.map((link) => (
+          <a
+            href={link.href}
+            rel="noopener"
+            target="_blank"
+            class:list={["case__link", link.primary && "case__link--primary"]}
+          >
+            {t(link.label, locale)} →
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <footer class="case__cta">
+      <p class="case__cta-intro">
+        {
+          locale === "es"
+            ? "¿Tenés un rol backend o cloud en mente? Escribime y te cuento cómo trabajo."
+            : "Got a backend or cloud role in mind? Email me and I'll walk you through how I work."
+        }
+      </p>
+      <EmailCta locale={locale} variant="secondary" />
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .case {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    align-self: flex-start;
+    color: rgba(253, 255, 0, 0.9);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 150ms ease;
+  }
+
+  .back-link:hover {
+    color: #fdff00;
+  }
+
+  .back-link:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  .case__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .case__year {
+    color: rgba(253, 255, 0, 0.8);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .case__title {
+    margin: 0;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .case__summary {
+    margin: 0;
+    max-width: 70ch;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .case__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 1rem 0 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .case__fact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .case__fact dt {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .case__fact dd {
+    margin: 0;
+    max-width: 52ch;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .case__section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .case__section-title {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .case__paragraph {
+    margin: 0;
+    max-width: 72ch;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .case__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .case__list li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .case__list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: rgba(253, 255, 0, 0.8);
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 0;
+  }
+
+  .tech-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  /* The card label is structure, not a mark. Six accented labels in a row
+     would spend the whole viewport budget on a legend. */
+  .tech-card__label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .tech-card__value {
+    margin: 0.5rem 0 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .architecture {
+    margin: 0;
+    padding: 1.5rem;
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .case__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .case__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .case__link:hover {
+    color: #fafafa;
+    border-color: rgba(253, 255, 0, 0.3);
+  }
+
+  .case__link--primary {
+    color: #fdff00;
+    border-color: rgba(253, 255, 0, 0.3);
+  }
+
+  .case__link--primary:hover {
+    color: #fdff00;
+    background: rgba(253, 255, 0, 0.1);
+    border-color: rgba(253, 255, 0, 0.6);
+  }
+
+  .case__link:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  .case__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .case__cta-intro {
+    margin: 0;
+    max-width: 60ch;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+</style>

@@ -1,0 +1,103 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+import { ui, t } from "../data/ui";
+import { DEFAULT_LOCALE, type Locale } from "../data/types";
+
+/**
+ * The real 404.
+ *
+ * Cloudflare Pages serves the home page for every unmatched path when no
+ * 404.html exists, which means a broken URL returns 200 with the home page's
+ * HTML. That silently breaks a CV download (the button appears to work and
+ * downloads nothing) and tells a crawler the site is one page.
+ */
+const locale = DEFAULT_LOCALE;
+---
+
+<!doctype html>
+<html lang={locale} class="bg-black">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="robots" content="noindex" />
+    <meta
+      name="description"
+      content={t(ui.notFound.body, locale)}
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{t(ui.notFound.title, locale)} — {site.name}</title>
+  </head>
+  <body class="min-h-screen bg-black text-white">
+    <main class="notfound">
+      <p class="notfound__code">404</p>
+      <h1 class="notfound__title">{t(ui.notFound.title, locale)}</h1>
+      <p class="notfound__body">{t(ui.notFound.body, locale)}</p>
+      <a class="notfound__cta" href={`/${locale}/`}>
+        {t(ui.notFound.cta, locale)} →
+      </a>
+    </main>
+  </body>
+</html>
+
+<style>
+  .notfound {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.25rem;
+    min-height: 100vh;
+    max-width: 60ch;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .notfound__code {
+    margin: 0;
+    color: rgba(253, 255, 0, 0.8);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .notfound__title {
+    margin: 0;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .notfound__body {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .notfound__cta {
+    margin-top: 1rem;
+    color: #fdff00;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 150ms ease;
+  }
+
+  .notfound__cta:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .notfound__cta:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+</style>

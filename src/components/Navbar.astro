@@ -1,25 +1,68 @@
 ---
+import { ui, t } from "../data/ui";
+import { LOCALES, type Locale } from "../data/types";
+import { alternatePath, routes } from "../data/routes";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+/**
+ * The switcher preserves the current path: it swaps the locale and keeps the
+ * page, so switching language never dumps the visitor back on the home page.
+ */
+const currentPath = Astro.url.pathname.replace(/^\/(es|en)/, "") || "/";
+
 const links = [
-  { href: '/', label: 'Inicio' },
-  { href: '/contacto', label: 'Contacto' },
+  { key: "home" as const, label: ui.nav.home },
+  { key: "experiencia" as const, label: ui.nav.experience },
+  { key: "proyectos" as const, label: ui.nav.projects },
+  { key: "contacto" as const, label: ui.nav.contact },
 ];
-const current = Astro.url.pathname;
+
+const otherLocale: Locale = locale === "es" ? "en" : "es";
+const otherHref = alternatePath(Astro.url.pathname, locale);
 ---
-<nav aria-label="Principal" class="flex items-center h-14">
-  <ul class="flex gap-6 text-sm">
-    {links.map((l) => (
-      <li>
-        <a
-          href={l.href}
-          aria-current={current === l.href ? 'page' : undefined}
-          class="nav-link"
-          data-label={l.label}
-        >
-          <span class="nav-link__text" data-label={l.label}>{l.label}</span>
-        </a>
-      </li>
-    ))}
+
+<nav aria-label="Principal" class="flex items-center justify-between h-14 gap-4">
+  <ul class="flex gap-6 text-sm flex-wrap min-w-0">
+    {
+      links.map((l) => {
+        const href = `/${locale}${routes[l.key][locale]}`;
+        const isCurrent =
+          l.key === "home"
+            ? currentPath === "/"
+            : currentPath.startsWith(routes[l.key][locale]);
+        return (
+          <li>
+            <a
+              href={href}
+              aria-current={isCurrent ? "page" : undefined}
+              class="nav-link"
+              data-label={t(l.label, locale)}
+            >
+              <span class="nav-link__text" data-label={t(l.label, locale)}>
+                {t(l.label, locale)}
+              </span>
+            </a>
+          </li>
+        );
+      })
+    }
   </ul>
+
+  <a
+    href={otherHref}
+    hreflang={otherLocale}
+    lang={otherLocale}
+    class="locale-switch"
+    aria-label={t(ui.nav.switchLabel, locale)}
+    data-label={t(ui.nav.switchTo, locale)}
+  >
+    <span class="locale-switch__text">{t(ui.nav.switchTo, locale)}</span>
+  </a>
 </nav>
 
 <style>
@@ -28,7 +71,7 @@ const current = Astro.url.pathname;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    color: #b3b3b3;
+    color: #a1a1a1;
     letter-spacing: 0.01em;
     text-decoration: none;
     transition: color 150ms ease;
@@ -43,16 +86,18 @@ const current = Astro.url.pathname;
     color: #fdff00;
     font-weight: 700;
     opacity: 0.2;
-    transition: opacity 150ms ease, transform 150ms ease;
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease;
   }
 
   .nav-link::before {
-    content: '{';
+    content: "{";
     transform: translateX(2px);
   }
 
   .nav-link::after {
-    content: '}';
+    content: "}";
     transform: translateX(-2px);
   }
 
@@ -73,19 +118,61 @@ const current = Astro.url.pathname;
   }
 
   .nav-link:focus-visible {
-    outline: 2px solid rgba(253, 255, 0, 0.6);
-    outline-offset: 3px;
-    border-radius: 6px;
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  /* The locale switch carries the same markup-delimiter grammar as the nav
+     links, but in its own weight: it marks the document's language, which is
+     structure rather than navigation. */
+  .locale-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #a1a1a1;
+    font-size: 0.875rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .locale-switch:hover,
+  .locale-switch:focus-visible {
+    color: #e5e5e5;
+  }
+
+  .locale-switch:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  /* On a phone the four links and the switcher do not fit on one line, so
+     they wrap instead of pushing the page into a horizontal scroll. */
+  @media (max-width: 640px) {
+    nav {
+      height: auto;
+      min-height: 3.5rem;
+      flex-wrap: wrap;
+      padding: 0.75rem 0;
+    }
+
+    nav ul {
+      gap: 1rem;
+      font-size: 0.875rem;
+    }
+
+    .locale-switch {
+      font-size: 0.875rem;
+    }
   }
 </style>
 
 <script>
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const texts = Array.from(document.querySelectorAll('.nav-link__text'));
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-  texts.forEach((el) => {
-    const original = el.dataset.label || el.textContent || '';
-    let scrambleId;
+  const scramble = (el: HTMLElement) => {
+    const original = el.dataset.label || el.textContent || "";
+    let scrambleId: number | undefined;
 
     const restore = () => {
       if (scrambleId) {
@@ -100,9 +187,13 @@ const current = Astro.url.pathname;
       let progress = 0;
       scrambleId = window.setInterval(() => {
         const next = original
-          .split('')
-          .map((char, idx) => (idx < progress ? char : alphabet[Math.floor(Math.random() * alphabet.length)]))
-          .join('');
+          .split("")
+          .map((char, idx) =>
+            idx < progress
+              ? char
+              : alphabet[Math.floor(Math.random() * alphabet.length)],
+          )
+          .join("");
         el.textContent = next;
         progress += 1;
         if (progress > original.length) {
@@ -111,9 +202,16 @@ const current = Astro.url.pathname;
       }, 30);
     };
 
-    el.addEventListener('mouseenter', run);
-    el.addEventListener('focus', run);
-    el.addEventListener('mouseleave', restore);
-    el.addEventListener('blur', restore);
-  });
+    el.addEventListener("mouseenter", run);
+    el.addEventListener("focus", run);
+    el.addEventListener("mouseleave", restore);
+    el.addEventListener("blur", restore);
+  };
+
+  document
+    .querySelectorAll<HTMLElement>(".nav-link__text")
+    .forEach((el) => scramble(el));
+
+  const localeSwitch = document.querySelector<HTMLElement>(".locale-switch__text");
+  if (localeSwitch) scramble(localeSwitch);
 </script>

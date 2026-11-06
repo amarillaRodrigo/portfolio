@@ -34,28 +34,16 @@
   }
 }
 
-/* Typography scale */
-.h1 {
-  @apply font-sans font-semibold tracking-tight;
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1.05;
-}
-.h2 {
-  @apply font-sans font-semibold tracking-tight;
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  line-height: 1.1;
-}
-.body {
-  @apply font-sans text-base;
-  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
-  line-height: 1.6;
-}
+/* Typography scale.
+   The type lives with the components that use it, so the ramp in DESIGN.md is
+   the authority and the code names the role it is setting. */
 
-/* Focus styles for accessibility */
+/* Focus styles for accessibility.
+   One ring everywhere: 2px accent, 2px offset. No radius on the outline —
+   the component supplies its own, and a radius here would override it. */
 :focus-visible {
   outline: 2px solid theme('colors.accent.DEFAULT');
   outline-offset: 2px;
-  border-radius: 6px;
 }
 
 /* Subtle selection highlight */

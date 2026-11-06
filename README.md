@@ -1,157 +1,116 @@
-# Portfolio Personal - Rodrigo Amarilla
+# Portfolio — Rodrigo Amarilla
 
-Portfolio profesional minimalista con efectos de decodificación y carrete horizontal de proyectos. Construido con Astro + Tailwind CSS.
+Portfolio profesional de **Rodrigo Amarilla**, Backend Engineer con foco en cloud engineering. Un sitio bilingüe (español e inglés) construido con Astro 5 y Tailwind CSS, desplegado en Cloudflare Pages.
 
-## 🚀 Características
+- **Producción:** https://rodrigoamarilla.tech
+- **CV (ES):** `/cv/rodrigo-amarilla-cv-es.pdf` · **CV (EN):** `/cv/rodrigo-amarilla-cv-en.pdf`
 
-- Diseño minimalista con tipografía Work Sans
-- Efecto de decodificación/scramble en navegación y hero
-- Carrete horizontal de proyectos con scroll
-- Reloj en tiempo real con zona horaria de Buenos Aires
-- Diseño completamente responsive
-- Colores de acento amarillo (#FDFF00)
-- Páginas de detalle para cada proyecto
+## Stack
 
-## 🛠️ Stack Tecnológico
-
-- **Framework:** Astro 5.16.5
-- **Estilos:** Tailwind CSS 3.4.19
+- **Framework:** Astro 5.16 (output estático, `trailingSlash: "always"`)
+- **Estilos:** Tailwind CSS 3.4
 - **Tipografía:** Work Sans (Google Fonts)
-- **Animaciones:** JavaScript Vanilla
-- **Deploy:** Cloudflare Pages
+- **Animaciones:** JavaScript vanilla — efecto de decodificación en el navbar y el conmutador de idioma, `fade-in` por `IntersectionObserver`
+- **Deploy:** Cloudflare Pages (branch `master`, output `dist`)
 
-## 📦 Instalación y Desarrollo
+## Rutas
 
-```bash
-# Instalar dependencias
-npm install
+Todo URL lleva su locale. No hay toggle por `localStorage`: las rutas son reales, compartibles y rastreables.
 
-# Servidor de desarrollo
-npm run dev
+| Español | English | Contenido |
+| --- | --- | --- |
+| `/es/` | `/en/` | Home: hero, experiencia, destacados, otros proyectos, stack y contacto |
+| `/es/experiencia/` | `/en/experience/` | NÓRDICO (el repo es privado: no hay link) |
+| `/es/proyectos/` | `/en/work/` | Todos los proyectos |
+| `/es/proyectos/journal-api/` | `/en/work/journal-api/` | Caso de estudio: Journal API |
+| `/es/proyectos/postulado/` | `/en/work/postulado/` | Caso de estudio: PostulaDo |
+| `/es/proyectos/task-tracker/` | `/en/work/task-tracker/` | Caso de estudio: Task Tracker |
+| `/es/proyectos/multi-container-app/` | `/en/work/multi-container-app/` | Caso de estudio: Multi-Container App |
+| `/es/contacto/` | `/en/contact/` | Contacto |
+| `/sitemap.xml` | | Todas las rutas en los dos idiomas |
+| `/robots.txt` | | |
+| `/404.html` | | 404 real (Cloudflare Pages sirve el home para rutas inexistentes si no existe) |
 
-# Build para producción
-npm run build
-
-# Preview del build
-npm run preview
-```
-
-## 📁 Estructura del Proyecto
+## Estructura
 
 ```
 src/
-  layouts/
-    BaseLayout.astro          # Layout base con navbar y footer
-  pages/
-    index.astro               # Redirección a /trabajos
-    trabajos.astro            # Página principal con carrete de proyectos
-    contacto.astro            # Información personal y contacto
-    proyectos/
-      sigeled.astro           # Detalle del proyecto Sigeled
-  components/
-    Navbar.astro              # Navegación con efecto decode
-    Footer.astro              # Footer del sitio
   data/
-    projects.ts               # Datos de proyectos
-  styles/
-    global.css                # Estilos globales y tipografía
-public/
-  thumbs/                     # Thumbnails de proyectos
-docs/
-  journal.md                  # Diario de desarrollo
+    types.ts            Tipos compartidos: Locale, Localized, CaseStudy
+    site.ts             Identidad, contacto, stack, el href del mailto, la ruta del CV
+    ui.ts               Todos los textos de la interfaz, en los dos idiomas
+    routes.ts           La tabla de rutas: la base del conmutador de idioma
+    projects.ts         Los cuatro proyectos, con su caso de estudio en ES y EN
+    experiencia.ts       NÓRDICO. Separate porque no es un proyecto con repo ni thumbnail
+    profileInfoContent.ts  Contenido de "Sobre mí"
+  components/
+    Navbar.astro        Navegación con efecto de decodificación + conmutador de idioma
+    Footer.astro
+    ProjectCard.astro   La tarjeta del carril y del grid
+    CaseStudy.astro     La plantilla de caso: Problema → Enfoque → Arquitectura → Resultado → Límites
+    EmailCta.astro      El CTA principal: un mailto con subject y body prellenados
+  layouts/
+    BaseLayout.astro    lang por locale, title/description/OG por locale, hreflang, JSON-LD Person
+  pages/
+    [locale]/
+      index.astro       La home de cinco bloques
+      [...path].astro   Contacto, experiencia, índice de proyectos y casos de estudio
+    404.astro
+    sitemap.xml.ts
+    robots.txt.ts
+scripts/
+  sync-cv.mjs           Sincroniza y verifica los CV publicados
+tests/
+  external-links.test.js    Todo enlace externo tiene que resolver
+  profile-info-content.test.js  Ninguna cifra sin fuente
 ```
 
-## 🎨 Personalización
+## Desarrollo
 
-### Agregar Proyectos
-
-Edita `src/data/projects.ts`:
-
-```ts
-{
-  id: 'proyecto-id',
-  name: 'Nombre del Proyecto',
-  year: '2024',
-  tags: ['React', 'Node.js', 'PostgreSQL'],
-  desc: 'Descripción breve del proyecto',
-  href: '/proyectos/proyecto-id',
-  thumb: '/thumbs/proyecto.svg',
-}
+```bash
+npm install
+npm run dev          # servidor de desarrollo
+npm run build        # verifica los CV y compila
+npm run preview      # sirve el build
+npm test             # vitest
 ```
 
-Luego crea la página de detalle en `src/pages/proyectos/proyecto-id.astro`.
+## El CV no se genera desde markdown
 
-### Colores
+Los CV se compilan desde LaTeX en el repositorio `ai-job-search` y se publican aquí como copias sincronizadas. El origen de verdad es:
 
-Los colores principales se definen en `tailwind.config.mjs`:
+| Artefacto | Dónde vive | Quién lo consume |
+| --- | --- | --- |
+| Fuente LaTeX | `ai-job-search/cv/main_example.tex` + `main_example_en.tex` | `/apply`, `/setup` |
+| PDF maestro | `ai-job-search/cv/rodrigoMain.pdf` + `main_example_en.pdf` | `tools/verify_pdf.py` |
+| PDF publicado | `portfolio/public/cv/rodrigo-amarilla-cv-es.pdf` + `-en.pdf` | el botón de descarga |
 
-```js
-colors: {
-  accent: {
-    DEFAULT: '#fdff00',  // Lemon Glacier
-    dim: '#d6d800',
-  },
-}
+Para re-sincronizar:
+
+```bash
+npm run sync-cv            # copia desde la fuente y verifica
+npm run sync-cv -- --check # sólo verifica, sin copiar
 ```
 
-### Tipografía
+El script falla si el PDF no tiene 2 páginas, si no tiene capa de texto extraíble o si tiene un año unido a un guion Unicode. Si el repositorio hermano no está disponible, define `CV_SOURCE_DIR` con su ruta.
 
-La fuente Work Sans se importa en `src/styles/global.css`:
+`npm run build` ejecuta `sync-cv --check` antes de compilar: un CV roto no llega a producción.
 
-```css
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap');
-```
+## Reglas del contenido
 
-## 🌐 Rutas
+Estas reglas son la razón de que el repositorio sea legible por alguien que filtra:
 
-- `/` → Redirige a `/trabajos`
-- `/trabajos` → Página principal con proyectos
-- `/contacto` → Información personal y contacto
-- `/proyectos/[id]` → Detalle de proyecto específico
+- **Ningún número sin medir.** Si una cifra no sale de un repositorio, un log o un documento, no se publica.
+- **Todo enlace externo tiene que resolver.** `tests/external-links.test.js` lo verifica en CI. Un enlace a un destino que no existe es peor que ningún enlace.
+- **El repositorio es el enlace principal; la demo es secundaria y siempre verificada.** Las demos se pudren.
+- **Una sola versión del perfil en todo lo público.** Si el sitio, el CV y GitHub se contradicen, es un bug.
+- **Nada de "Presente".** Los rangos de fechas son cerrados.
+- **La IA es una capa transversal, no una identidad.** El sitio se posiciona por Java, Spring Boot y AWS.
 
-## ✨ Efectos Especiales
+## Diseño
 
-### Efecto Decode
+`DESIGN.md` documenta el sistema visual ("Documento Técnico") y `PRODUCT.md` el contexto del producto. Ambos son la autoridad: si el código y el documento se contradicen, el documento gana y el código se corrige.
 
-Los enlaces del navbar y el texto del hero incluyen un efecto de "decodificación" que:
-- Se activa en hover/focus
-- Muestra caracteres aleatorios (A-Z, 0-9)
-- Revela gradualmente el texto original
-- Incluye decoraciones con llaves `{ }` en amarillo
+## Licencia
 
-### Carrete de Proyectos
-
-Sección horizontal con scroll que muestra tarjetas de proyectos:
-- Hover effect con elevación y borde amarillo
-- Muestra nombre, año y tags de cada proyecto
-- Links clicables a páginas de detalle
-- Responsive en tablets y móviles
-
-## 🔧 Configuración de Deploy
-
-El proyecto está configurado para deploy en Cloudflare Pages:
-
-- **Framework preset:** Astro
-- **Build command:** `npm run build`
-- **Build output directory:** `dist`
-- **Production branch:** `master`
-
-## 📝 Historial de Desarrollo
-
-Ver `docs/journal.md` para un registro detallado de todas las decisiones de diseño y cambios realizados durante el desarrollo.
-
-## 🎯 Próximos Pasos
-
-- [ ] Agregar más proyectos al carrete
-- [ ] Implementar sistema de filtrado por tags
-- [ ] Agregar imágenes/capturas reales de proyectos
-- [ ] Integrar analytics
-- [ ] Agregar modo oscuro/claro
-
-## 📄 Licencia
-
-Este proyecto es de uso personal para Rodrigo Amarilla.
-
----
-
-**Desarrollado por Rodrigo Amarilla** | Buenos Aires, Argentina | 2024-2025
+Uso personal de Rodrigo Amarilla.

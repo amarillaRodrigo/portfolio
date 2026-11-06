@@ -1,0 +1,455 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CaseStudy from "../../components/CaseStudy.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import EmailCta from "../../components/EmailCta.astro";
+import { projects, getProject } from "../../data/projects";
+import { experiences } from "../../data/experiencia";
+import { allRoutes } from "../../data/routes";
+import { site, stackGroups, mailtoHref, cvPath } from "../../data/site";
+import { ui, t } from "../../data/ui";
+import { DEFAULT_LOCALE, type Locale } from "../../data/types";
+
+/**
+ * Every route that is not the home page, in both languages.
+ *
+ * The paths differ per locale (/es/contacto/ and /en/contact/), so they are
+ * generated from the route table rather than from the file name.
+ */
+export function getStaticPaths() {
+  return allRoutes(projects.map((p) => p.slug))
+    .filter((r) => r.kind !== "home")
+    .map((r) => ({
+      params: { locale: r.locale, path: r.path },
+      props: { route: r },
+    }));
+}
+
+interface Props {
+  route: {
+    locale: Locale;
+    path: string;
+    kind: "contacto" | "experiencia" | "proyectos" | "proyecto";
+    slug?: string;
+  };
+}
+
+const { route } = Astro.props;
+const locale = (route.locale ?? DEFAULT_LOCALE) as Locale;
+const isEs = locale === "es";
+
+const title =
+  route.kind === "contacto"
+    ? isEs
+      ? `Contacto — ${site.name}`
+      : `Contact — ${site.name}`
+    : route.kind === "experiencia"
+      ? isEs
+        ? `Experiencia — ${site.name}`
+        : `Experience — ${site.name}`
+      : route.kind === "proyectos"
+        ? isEs
+          ? `Proyectos — ${site.name}`
+          : `Work — ${site.name}`
+        : `${getProject(route.slug!)?.name} — ${site.name}`;
+
+const description =
+  route.kind === "contacto"
+    ? isEs
+      ? "Contactá a Rodrigo Amarilla, Backend Engineer con foco en cloud engineering. Formosa, Argentina. Remoto LATAM y US-East."
+      : "Get in touch with Rodrigo Amarilla, a backend engineer with a cloud engineering focus. Formosa, Argentina. Remote across LATAM and US-East."
+    : route.kind === "experiencia"
+      ? isEs
+        ? "Experiencia de Rodrigo Amarilla como Backend Engineer en NÓRDICO: Java, Spring Boot, PostgreSQL, AWS y despliegue en producción."
+        : "Rodrigo Amarilla's experience as a Backend Engineer at NÓRDICO: Java, Spring Boot, PostgreSQL, AWS and production deployment."
+      : route.kind === "proyectos"
+        ? isEs
+          ? "Proyectos de Rodrigo Amarilla: Journal API en AWS con Kubernetes y Terraform, PostulaDo con NestJS y SGLang, y más."
+          : "Rodrigo Amarilla's work: Journal API on AWS with Kubernetes and Terraform, PostulaDo with NestJS and SGLang, and more."
+        : t(getProject(route.slug!)?.tagline ?? { es: "", en: "" }, locale);
+
+const path =
+  route.kind === "contacto"
+    ? isEs
+      ? "/contacto/"
+      : "/contact/"
+    : route.kind === "experiencia"
+      ? isEs
+        ? "/experiencia/"
+        : "/experience/"
+      : route.kind === "proyectos"
+        ? isEs
+          ? "/proyectos/"
+          : "/work/"
+        : isEs
+          ? `/proyectos/${route.slug}/`
+          : `/work/${route.slug}/`;
+---
+
+{
+  route.kind === "proyecto" && getProject(route.slug!) ? (
+    <CaseStudy project={getProject(route.slug!)!} locale={locale} />
+  ) : route.kind === "contacto" ? (
+    <BaseLayout title={title} description={description} {locale} path={path}>
+      <section class="page">
+        <h1 class="page__title">{t(ui.sections.contact, locale)}</h1>
+        <p class="page__intro">{t(ui.sections.contactIntro, locale)}</p>
+
+        <div class="contact__actions">
+          <a class="contact__email" href={mailtoHref(locale)}>
+            {site.email}
+          </a>
+          <a class="cv-link" href={cvPath[locale]} download>
+            {t(ui.hero.cv, locale)}
+          </a>
+        </div>
+
+        <dl class="contact__details">
+          <div class="contact__detail">
+            <dt>{t(ui.footer.location, locale)}</dt>
+            <dd>{site.location}</dd>
+          </div>
+          <div class="contact__detail">
+            <dt>{isEs ? "Teléfono" : "Phone"}</dt>
+            <dd>
+              <a href={`tel:${site.phone.replace(/\s/g, "")}`}>{site.phone}</a>
+            </dd>
+          </div>
+        </dl>
+
+        <ul class="contact__links">
+          <li>
+            <a href={site.github} rel="noopener" target="_blank">
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href={site.linkedin} rel="noopener" target="_blank">
+              LinkedIn
+            </a>
+          </li>
+        </ul>
+      </section>
+    </BaseLayout>
+  ) : route.kind === "experiencia" ? (
+    <BaseLayout title={title} description={description} {locale} path={path}>
+      <section class="page">
+        <h1 class="page__title">{t(ui.sections.experience, locale)}</h1>
+
+        {experiences.map((experience) => (
+          <article class="experience">
+            <div class="experience__meta">
+              <span class="experience__company">{experience.company}</span>
+              <span class="experience__period">{experience.period}</span>
+            </div>
+
+            <h2 class="experience__title">{t(experience.title, locale)}</h2>
+            <p class="experience__location">{t(experience.location, locale)}</p>
+            <p class="experience__summary">{t(experience.summary, locale)}</p>
+
+            <ul class="experience__highlights">
+              {t(experience.highlights, locale).map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+
+            <ul class="tag-row">
+              {experience.tech.map((tech) => (
+                <li>{tech}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </section>
+    </BaseLayout>
+  ) : (
+    <BaseLayout title={title} description={description} {locale} path={path}>
+      <section class="page">
+        <h1 class="page__title">{t(ui.sections.featured, locale)}</h1>
+
+        <div class="project-grid">
+          {projects.map((project) => (
+            <ProjectCard project={project} locale={locale} />
+          ))}
+        </div>
+
+        <div class="page__cta">
+          <p class="page__cta-intro">
+            {isEs
+              ? "Si alguno de estos se parece a lo que necesitás, escribime y te cuento cómo lo resolví."
+              : "If any of these look like what you need, email me and I'll walk you through how I approached it."}
+          </p>
+          <EmailCta locale={locale} variant="secondary" />
+        </div>
+      </section>
+    </BaseLayout>
+  )
+}
+
+<style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .page__title {
+    margin: 0;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .page__intro {
+    margin: 0;
+    max-width: 60ch;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .page__cta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .page__cta-intro {
+    margin: 0;
+    max-width: 60ch;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-grid :global(.project-card) {
+    width: auto;
+    min-height: auto;
+  }
+
+  .experience {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 78ch;
+  }
+
+  .experience__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .experience__company {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .experience__period {
+    color: rgba(253, 255, 0, 0.8);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .experience__title {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .experience__location {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .experience__summary {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .experience__highlights {
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .experience__highlights li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .experience__highlights li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: rgba(253, 255, 0, 0.8);
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tag-row li {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+  }
+
+  .contact__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .contact__email {
+    color: #fdff00;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: opacity 150ms ease;
+  }
+
+  .contact__email:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .contact__email:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  .cv-link {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .cv-link:hover {
+    color: #fafafa;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .cv-link:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  .contact__details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin: 0;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .contact__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .contact__detail dt {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .contact__detail dd {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+  }
+
+  .contact__detail a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .contact__detail a:hover {
+    color: #fafafa;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .contact__links {
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact__links a {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .contact__links a:hover {
+    color: #fafafa;
+  }
+
+  .contact__links a:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+</style>

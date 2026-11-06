@@ -1,0 +1,65 @@
+---
+import { mailtoHref } from "../data/site";
+import { ui, t } from "../data/ui";
+import type { Locale } from "../data/types";
+
+interface Props {
+  locale: Locale;
+  /** `primary` is the accent-filled action. There is exactly one per viewport. */
+  variant?: "primary" | "secondary";
+}
+
+const { locale, variant = "primary" } = Astro.props;
+const href = mailtoHref(locale);
+---
+
+<a href={href} class:list={["cta", `cta--${variant}`]}>
+  {variant === "primary" ? t(ui.hero.cta, locale) : t(ui.labels.talk, locale)} →
+</a>
+
+<style>
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+
+  /* The accent enters; the button never moves. */
+  .cta--primary {
+    color: #fdff00;
+    background: transparent;
+    border: 1px solid rgba(253, 255, 0, 0.3);
+  }
+
+  .cta--primary:hover {
+    background: rgba(253, 255, 0, 0.1);
+    border-color: rgba(253, 255, 0, 0.6);
+  }
+
+  .cta--secondary {
+    color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .cta--secondary:hover {
+    color: #fafafa;
+    border-color: rgba(253, 255, 0, 0.3);
+  }
+
+  .cta:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+</style>

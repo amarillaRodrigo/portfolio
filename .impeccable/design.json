@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06T00:00:00.000Z",
+  "title": "Design System: Rodrigo Amarilla — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#0a0a0a",
+        "tonalRamp": ["#000000", "#0a0a0a", "#1f1f1f", "#3d3d3d", "#6b6b6b", "#9c9c9c", "#cfcfcf", "#fafafa"]
+      },
+      "paper-subtle": {
+        "role": "neutral",
+        "displayName": "Paper Subtle",
+        "canonical": "#171717",
+        "tonalRamp": ["#000000", "#0a0a0a", "#171717", "#2e2e2e", "#525252", "#828282", "#b5b5b5", "#f5f5f5"]
+      },
+      "base": {
+        "role": "neutral",
+        "displayName": "Base",
+        "canonical": "#fafafa",
+        "tonalRamp": ["#1a1a1a", "#333333", "#555555", "#777777", "#a1a1a1", "#cfcfcf", "#e8e8e8", "#fafafa"]
+      },
+      "base-muted": {
+        "role": "neutral",
+        "displayName": "Base Muted",
+        "canonical": "#a1a1a1",
+        "tonalRamp": ["#141414", "#2b2b2b", "#4a4a4a", "#6d6d6d", "#a1a1a1", "#c4c4c4", "#dedede", "#f4f4f4"]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Lemon Glacier",
+        "canonical": "#fdff00",
+        "tonalRamp": ["#1c1f00", "#333800", "#4a5100", "#626a00", "#7f8800", "#a8b000", "#d6d800", "#fdff00"]
+      },
+      "accent-dim": {
+        "role": "primary",
+        "displayName": "Accent Dim (unused — remove)",
+        "canonical": "#d6d800",
+        "tonalRamp": ["#1a1c00", "#2e3200", "#434700", "#5a5f00", "#7d8400", "#a3ab00", "#d6d800", "#f4ff45"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero name and page titles. One per viewport."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Project names and card headings, uppercase."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running prose. Case studies read at 65-75ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "The margin annotation: stack line, location line, nav links, metadata."
+      }
+    },
+    "shadows": [
+      {
+        "name": "subtle",
+        "value": "0 1px 2px rgba(0,0,0,0.03)",
+        "purpose": "Reserved for elements that genuinely float over the sheet, such as the focused skip-to-content link. Never on cards, buttons or chips."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "ease",
+        "purpose": "Default easing for state transitions."
+      },
+      {
+        "name": "duration-color",
+        "value": "150ms",
+        "purpose": "Colour and opacity transitions: nav links, braces, borders."
+      },
+      {
+        "name": "duration-transform",
+        "value": "200ms",
+        "purpose": "Transform transitions: the 2px lift on rail cards."
+      },
+      {
+        "name": "duration-enter",
+        "value": "500ms",
+        "purpose": "The fade-in entrance: opacity and a 2px translate, ease-out, once per element."
+      },
+      {
+        "name": "scramble-step",
+        "value": "30ms",
+        "purpose": "Per-character step of the decode/scramble effect on nav labels."
+      }
+    ],
+    "breakpoints": [
+      { "name": "tablet", "value": "1024px" },
+      { "name": "mobile", "value": "640px" }
+    ],
+    "grid": {
+      "size": "24px",
+      "opacity": "0.02",
+      "purpose": "The drawing grid, painted on the body as a background-image beneath all content."
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The site's single primary action. The accent enters on hover; the button itself never moves.",
+      "html": "<a href=\"#\" class=\"ds-btn-primary\">Ver proyecto →</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid rgba(253, 255, 0, 0.3); border-radius: 8px; background: transparent; color: #fdff00; padding: 1rem 2rem; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background-color 150ms ease, border-color 150ms ease; } .ds-btn-primary:hover { background-color: rgba(253, 255, 0, 0.1); border-color: rgba(253, 255, 0, 0.6); } .ds-btn-primary:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
+    },
+    {
+      "name": "Primary Button — Accent Hover Variant",
+      "kind": "button",
+      "refersTo": "button-primary-hover",
+      "description": "The filled state of the primary action, for the single instance in a viewport that may carry the accent at full strength.",
+      "html": "<a href=\"#\" class=\"ds-btn-accent\">Contactar</a>",
+      "css": ".ds-btn-accent { display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid #fdff00; border-radius: 8px; background: #fdff00; color: #0a0a0a; padding: 1rem 2rem; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background-color 150ms ease, color 150ms ease; } .ds-btn-accent:hover { background: transparent; color: #fdff00; } .ds-btn-accent:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "refersTo": "link-nav",
+      "description": "A nav label wrapped in accent braces that brighten and slide inward on hover, focus or current page.",
+      "html": "<a href=\"#\" class=\"ds-nav-link\"><span class=\"ds-nav-text\">Contacto</span></a>",
+      "css": ".ds-nav-link { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; color: #a1a1a1; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.875rem; letter-spacing: 0.01em; text-decoration: none; transition: color 150ms ease; } .ds-nav-link::before, .ds-nav-link::after { color: #fdff00; font-weight: 700; opacity: 0.2; transition: opacity 150ms ease, transform 150ms ease; } .ds-nav-link::before { content: '{'; transform: translateX(2px); } .ds-nav-link::after { content: '}'; transform: translateX(-2px); } .ds-nav-link:hover, .ds-nav-link:focus-visible, .ds-nav-link[aria-current=\"page\"] { color: #e5e5e5; } .ds-nav-link:hover::before, .ds-nav-link:hover::after, .ds-nav-link:focus-visible::before, .ds-nav-link:focus-visible::after, .ds-nav-link[aria-current=\"page\"]::before, .ds-nav-link[aria-current=\"page\"]::after { opacity: 1; transform: translateX(0); } .ds-nav-link:focus-visible { outline: 2px solid rgba(253, 255, 0, 0.6); outline-offset: 3px; border-radius: 6px; }"
+    },
+    {
+      "name": "Tag Chip",
+      "kind": "chip",
+      "refersTo": "chip-tag",
+      "description": "A stack item or metadata tag. Muted, hairline-bordered, never accented except the project year.",
+      "html": "<span class=\"ds-chip\">FastAPI</span>",
+      "css": ".ds-chip { display: inline-block; color: #a1a1a1; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "card-project",
+      "description": "A sheet in the horizontal index: thumbnail, name, year and up to three tags. Lifts 2px on hover and takes the accent border.",
+      "html": "<a href=\"#\" class=\"ds-card\"><img src=\"\" alt=\"\" class=\"ds-card-thumb\" /><div class=\"ds-card-body\"><h3 class=\"ds-card-name\">Journal API</h3><p class=\"ds-card-year\">2026</p><ul class=\"ds-card-tags\"><li class=\"ds-chip\">FastAPI</li><li class=\"ds-chip\">AWS</li><li class=\"ds-chip\">Terraform</li></ul></div></a>",
+      "css": ".ds-card { display: block; width: 350px; height: 240px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; overflow: hidden; text-decoration: none; transform: translateY(0); transition: transform 200ms ease, background-color 150ms ease, border-color 150ms ease; } .ds-card:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(253, 255, 0, 0.3); transform: translateY(-2px); } .ds-card:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; } .ds-card-thumb { width: 100%; height: 160px; object-fit: cover; display: block; } .ds-card-body { padding: 0.75rem; } .ds-card-name { margin: 0; color: rgba(255, 255, 255, 0.9); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.875rem; font-weight: 600; } .ds-card-year { margin: 0.25rem 0 0; color: rgba(253, 255, 0, 0.8); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; } .ds-card-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 0.25rem; margin: 0.5rem 0 0; padding: 0; }"
+    },
+    {
+      "name": "Container",
+      "kind": "card",
+      "refersTo": "card-project",
+      "description": "A bordered block on the sheet: the case-study tech card and the contact box. Flat, hairline-ruled, no shadow.",
+      "html": "<div class=\"ds-panel\"><h3 class=\"ds-panel-title\">Cloud e infraestructura</h3><p class=\"ds-panel-body\">AWS · Kubernetes · Terraform · Docker</p></div>",
+      "css": ".ds-panel { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1.5rem; } .ds-panel-title { margin: 0 0 0.5rem; color: rgba(253, 255, 0, 0.9); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; } .ds-panel-body { margin: 0; color: rgba(255, 255, 255, 0.6); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; line-height: 1.6; }"
+    },
+    {
+      "name": "Micro Label",
+      "kind": "custom",
+      "refersTo": "chip-tag",
+      "description": "The margin annotation: uppercase, wide-tracked, muted. The system's voice for metadata.",
+      "html": "<p class=\"ds-label\">Formosa, Argentina — Remote-first</p>",
+      "css": ".ds-label { margin: 0; color: rgba(255, 255, 255, 0.9); font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; white-space: nowrap; }"
+    },
+    {
+      "name": "Text Link",
+      "kind": "button",
+      "refersTo": "link-nav",
+      "description": "A secondary action in accent, for links that must not read as buttons.",
+      "html": "<a href=\"#\" class=\"ds-text-link\">Ver repositorio →</a>",
+      "css": ".ds-text-link { color: #fdff00; font-family: 'Work Sans', ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: opacity 150ms ease; } .ds-text-link:hover { opacity: 0.8; text-decoration: underline; } .ds-text-link:focus-visible { outline: 2px solid #fdff00; outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Documento Técnico",
+    "overview": "A technical document, printed on black paper, in which a single fluorescent ink marks what matters. The system is a sheet, not a dashboard: one surface (paper), one ink (base), one accent tint (accent), a hairline rule that behaves like a drafting guide, and margins that hold micro-labels in wide-tracked uppercase. Nothing competes for attention, because a technical sheet has one hierarchy — and the accent marks the one thing that matters at that moment.\n\nThe name is not decoration; it is already in the code. global.css labels its own base layer '/* Editorial baseline */'. The colour tokens are named for paper and ink: paper (#0a0a0a) is the sheet, base (#fafafa) is the ink, base.muted is the ink at the foot of the page, paper.subtle is the sheet under the sheet, and accent is the highlighter. The type scale is named h1 / h2 / body — document semantics, not terminal semantics. The 24px grid at 2% opacity is the drawing grid. There is no monospace in the system, no glow, no scanline, no bloom: the uppercase-with-wide-tracking micro-labels are Work Sans set editorial, not a terminal, and boxShadow.subtle (0 1px 2px rgba(0,0,0,0.03)) is the shadow of a lifted sheet, not an instrument light.\n\nThe decode/scramble effect is the system at its most characteristic: text emerging from noise, a metaphor for reading rather than for a machine. The fade-in on scroll is the document entering the reader's field.\n\nDensity is the discipline: one idea per block. If a block asks for two ideas, it is two blocks. The horizontal rail is the index of the file, its sheets ordered by weight; a work-experience entry is a sheet inside the document, not a project in the same tray, because real work does not compete with a portfolio piece.",
+    "keyCharacteristics": [
+      "One accent ink, used as a highlighter: at most one accented element per viewport.",
+      "Flat surfaces separated by hairline rules, not shadows.",
+      "Micro-labels in uppercase with wide tracking as the margin annotation.",
+      "Generous real margins — 6rem block gaps, 2rem/4rem page padding, 62vh hero.",
+      "Motion is a single verb: the accent enters. Maximum 2px, and never on a button."
+    ],
+    "rules": [
+      {
+        "name": "The One Voice Rule",
+        "body": "The accent appears on at most one element per viewport. Its rarity is what makes it work.",
+        "section": "colors"
+      },
+      {
+        "name": "The Accent Lives Only on Paper Rule",
+        "body": "#fdff00 on paper measures 18.4:1 (AAA) and on paper.subtle 16.6:1 (AAA), but on base it is 1.03:1 — illegible. The accent therefore never appears as a background for text, and never appears over a light surface.",
+        "section": "colors"
+      },
+      {
+        "name": "The Accent Never Means Alone Rule",
+        "body": "The accent never encodes meaning by itself. Every accented mark is accompanied by text or by a shape.",
+        "section": "colors"
+      },
+      {
+        "name": "The Accent Never Grows Rule",
+        "body": "Accented text does not take a heavier weight or a larger size than the system already gives it. When accented text grows, it stops being a mark and becomes content.",
+        "section": "colors"
+      },
+      {
+        "name": "The Accent Has One Source Rule",
+        "body": "The accent is defined once, through the accent token, with the four named state opacities. Never a literal hex, never an invented rgba().",
+        "section": "colors"
+      },
+      {
+        "name": "The Uppercase Margin Rule",
+        "body": "Micro-labels are uppercase, tracked wide, 10-11px, and muted. They are never accented — with two exceptions, the year and the status tag.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Second Voice Rule",
+        "body": "One family. The document does not gain a second typeface for emphasis.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Surfaces are flat at rest. A shadow appears only where something genuinely floats over the sheet. The separation between two surfaces is a hairline, not a shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the accent to one element per viewport. That rarity is the system's entire visual argument.",
+      "Do express the accent through the accent token with the four named state opacities (accent, accent/60, accent/30, accent/10), never as a literal hex or an invented rgba().",
+      "Do separate surfaces with a hairline border, and reserve shadow-subtle for something that genuinely floats.",
+      "Do move elements at most 2px, and only cards. Buttons do not move.",
+      "Do transition colour and opacity in 150ms and transforms in 200ms, and name the properties.",
+      "Do keep uppercase micro-labels at 10-11px, 0.1em tracking, muted — and accent only the year and the status tag.",
+      "Do use the rounded-subtle token (8px) everywhere a radius appears.",
+      "Do keep one idea per block; split the block rather than compressing two ideas into one.",
+      "Do put the accent only on paper and paper.subtle surfaces, never over base."
+    ],
+    "donts": [
+      "Don't introduce a second accent tint, a gradient, or a light surface. The sheet is black and the ink is one colour.",
+      "Don't write transition: all — it animates layout properties and is how the incumbent ended up with four different hover durations.",
+      "Don't let a button move, lift or scale. The accent enters; the component stays.",
+      "Don't use the accent to encode meaning alone, and never to signal both state and content at once.",
+      "Don't grow accented text. A larger or heavier accent is content, not a mark.",
+      "Don't add a second focus-ring treatment. One ring, 2px solid accent, 2px offset, everywhere.",
+      "Don't use accent.dim (#d6d800). It is defined and has zero uses; it duplicates the accent without adding anything. Remove it.",
+      "Don't introduce a monospace face. The system has one family and the uppercase labels are not terminal output.",
+      "Don't raise or add motion to a component that does not already move."
+    ]
+  }
+}

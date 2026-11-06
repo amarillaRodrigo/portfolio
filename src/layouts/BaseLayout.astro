@@ -1,94 +1,142 @@
 ---
+import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
-import "../styles/global.css";
-const ownerName = Astro.props.ownerName ?? "Rodrigo";
-const showNameRail = Astro.props.showNameRail ?? false;
-const noPadding = Astro.props.noPadding ?? false;
+import { site } from "../data/site";
+import { ui, t } from "../data/ui";
+import { LOCALES, type Locale } from "../data/types";
+
+interface Props {
+  title: string;
+  description: string;
+  /** The canonical path of this page, without the locale prefix. */
+  path?: string;
+  /** The locale of this page. Every URL carries it. */
+  locale: Locale;
+  /** Hide the default padding for full-bleed sections. */
+  noPadding?: boolean;
+}
+
+const { title, description, path = "/", locale, noPadding = false } = Astro.props;
+
+const lang = locale;
+
+/** Every URL carries the locale and a trailing slash. */
+const localePath = path === "/" ? `/${locale}/` : `/${locale}${path}`;
+const canonical = new URL(localePath, site.domain).href;
+
+/**
+ * The alternate for each locale. Every page exists in both languages, so the
+ * switcher only ever has to swap the locale segment of the current path.
+ */
+const alternates = LOCALES.map((l) => ({
+  locale: l,
+  href: new URL(
+    path === "/" ? `/${l}/` : `/${l}${path}`,
+    site.domain,
+  ).href,
+}));
 ---
-<html lang="es" class="bg-black">
+
+<!doctype html>
+<html lang={lang} class="bg-black">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0a0a0a" />
-    <meta name="description" content="Portfolio editorial minimalista" />
+    <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{Astro.props.title ?? "Portfolio"}</title>
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.locale} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={locale === "es" ? "es_AR" : "en_US"} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL("/og.png", site.domain).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <title>{title}</title>
+
     <script is:inline>
-      document.documentElement.classList.add('js');
+      document.documentElement.classList.add("js");
     </script>
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: site.name,
+        url: site.domain,
+        email: `mailto:${site.email}`,
+        jobTitle:
+          locale === "es"
+            ? "Backend Engineer con foco en cloud engineering"
+            : "Backend Engineer with a cloud engineering focus",
+        description,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Formosa",
+          addressCountry: "AR",
+        },
+        sameAs: [site.linkedin, site.github],
+        knowsAbout: [
+          "Java",
+          "Spring Boot",
+          "Node.js",
+          "TypeScript",
+          "Python",
+          "FastAPI",
+          "PostgreSQL",
+          "AWS",
+          "Kubernetes",
+          "Terraform",
+          "CI/CD",
+        ],
+      })}
+    />
   </head>
   <body class="min-h-screen bg-black text-white">
-    <a href="#main" class="sr-only focus:not-sr-only focus:px-3 focus:py-2 focus:bg-white/10 focus:shadow-subtle">Saltar al contenido</a>
-    {showNameRail && <div class="name-rail" aria-hidden="true">{ownerName}</div>}
-    <header class="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-black/80 border-b border-white/10">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:px-3 focus:py-2 focus:bg-white/10 focus:shadow-subtle"
+      >{t(ui.nav.home, locale)}</a
+    >
+    <header
+      class="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-black/80 border-b border-white/10"
+    >
       <div class="max-w-6xl mx-auto px-4">
-        <Navbar />
+        <Navbar locale={locale} />
       </div>
     </header>
-    <main id="main" class={noPadding ? "max-w-full py-10" : "max-w-6xl mx-auto px-4 py-10"}>
+    <main
+      id="main"
+      class={noPadding ? "max-w-full py-10" : "max-w-6xl mx-auto px-4 py-10"}
+    >
       <slot />
     </main>
     <footer class="mt-16 border-t border-white/10">
       <div class="max-w-6xl mx-auto px-4 py-8">
-        <Footer />
+        <Footer locale={locale} />
       </div>
     </footer>
   </body>
 </html>
 
-<script is:inline>
-  (() => {
-    const reveal = () => {
-      const elements = Array.from(document.querySelectorAll('.fade-in'));
-      if (!elements.length) return;
-
-      if (!('IntersectionObserver' in window)) {
-        elements.forEach((el) => el.classList.add('is-visible'));
-        return;
-      }
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.08 }
-      );
-
-      elements.forEach((el) => observer.observe(el));
-    };
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', reveal, { once: true });
-    } else {
-      reveal();
-    }
-  })();
-</script>
-
 <style>
-  .name-rail {
-    position: fixed;
-    left: 16px;
-    top: 96px;
-    bottom: 96px;
-    display: none;
-    align-items: center;
-    font-size: 0.95rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #b3b3b3;
-    writing-mode: vertical-rl;
+  :global(html) {
+    scroll-behavior: smooth;
   }
 
-  @media (min-width: 1024px) {
-    .name-rail {
-      display: flex;
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
     }
   }
 </style>

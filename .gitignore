@@ -26,3 +26,21 @@ pnpm-debug.log*
 # Documentos privados
 WHITE PAPER  - SIGELED .md
 ENTREVISTA-ATS-PROYECTOS.md
+oportunidades/
+
+# Hooks de agentes con rutas absolutas a esta maquina
+.codex/
+.cursor/
+.gemini/
+
+# Estado de sesion de live mode (el config si se versiona)
+.impeccable/live/sessions/
+.impeccable/live/roots.json
+.impeccable/hook.cache.json
+
+# Capturas de revision: evidencia local, no fuente del sitio
+.impeccable/review/
+
+# Scripts de inspeccion local (no forman parte del sitio)
+scripts/capture.mjs
+scripts/measure-overflow.mjs

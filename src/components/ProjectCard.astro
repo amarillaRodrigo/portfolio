@@ -1,27 +1,154 @@
 ---
-import type { Project } from "../data/projects";
-const { project, selected } = Astro.props as { project: Project; selected?: boolean };
+import type { CaseStudy } from "../data/types";
+import type { Locale } from "../data/types";
+import { t } from "../data/ui";
+
+interface Props {
+  project: CaseStudy;
+  locale: Locale;
+  /** Compact cards carry less: no summary, no year emphasis. */
+  compact?: boolean;
+}
+
+const { project, locale, compact = false } = Astro.props;
+const href = locale === "es" ? `/es/proyectos/${project.slug}/` : `/en/work/${project.slug}/`;
+const thumb = `/thumbs/${project.slug}.png`;
 ---
-<article
-  class={`group w-64 shrink-0 border border-white/10 rounded-subtle bg-black/40 hover:bg-accent/5 focus-within:bg-accent/5 transition-colors ${selected ? 'ring-1 ring-accent/60' : ''}`}
-  tabindex="0"
-  role="button"
-  aria-pressed={selected ? 'true' : 'false'}
-  data-project-id={project.id}
-  data-name={project.name}
-  data-year={project.year}
-  data-tags={JSON.stringify(project.tags)}
-  data-desc={project.desc}
-  data-href={project.href}
->
-  <img src={project.thumb ?? '/thumbs/placeholder.svg'} alt="" loading="lazy" class="w-full h-40 object-cover rounded-t-subtle" />
-  <div class="p-3">
-    <h3 class="text-sm font-semibold">{project.name}</h3>
-    <p class="text-xs text-white/60">{project.year}</p>
-    <ul class="mt-2 flex flex-wrap gap-1">
-      {project.tags.slice(0,3).map((t) => (
-        <li class="text-[11px] border border-white/20 rounded-subtle px-1 py-[2px]">{t}</li>
-      ))}
+
+<a href={href} class="project-card" data-slug={project.slug}>
+  {
+    !compact && (
+      <img
+        src={thumb}
+        alt=""
+        loading="lazy"
+        class="project-card__thumb"
+        width="640"
+        height="400"
+      />
+    )
+  }
+  <div class="project-card__body">
+    <div class="project-card__meta">
+      <span class="project-card__year">{project.year}</span>
+      <span class="project-card__name">{project.name}</span>
+    </div>
+    {
+      !compact && (
+        <p class="project-card__tagline">{t(project.tagline, locale)}</p>
+      )
+    }
+    <ul class="project-card__tags">
+      {project.tags.slice(0, compact ? 3 : 4).map((tag) => <li>{tag}</li>)}
     </ul>
   </div>
-</article>
+</a>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 350px;
+    /* The rail is a horizontal scroller: the cards keep their width and the
+       rail scrolls. Without this they flex-shrink and the titles wrap. */
+    flex: 0 0 auto;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    text-decoration: none;
+    transform: translateY(0);
+    transition:
+      transform 200ms ease,
+      background-color 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .project-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(253, 255, 0, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .project-card:focus-visible {
+    outline: 2px solid #fdff00;
+    outline-offset: 2px;
+  }
+
+  .project-card__thumb {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .project-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .project-card__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  /* The year is one of the two data points the reader looks for first, so it
+     is one of the only two places the accent is allowed. */
+  .project-card__year {
+    color: rgba(253, 255, 0, 0.8);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .project-card__name {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  :global(.rail) .project-card__name {
+    font-size: 1.25rem;
+  }
+
+  .project-card__tagline {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-card__tags li {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .project-card {
+      width: 280px;
+    }
+  }
+</style>
