@@ -103,7 +103,8 @@ The portfolio repository must be reduced to one source of truth, and all public 
 Every number on the site must be measured. No invented metrics.
 
 - The three current claims in `src/data/profileInfoContent.ts` — "40% menos tiempo de deploy", "28% escaneabilidad", "2x features" — have no support and must go. `tests/profile-info-content.test.js:24-31` currently *requires* each micro-logro to contain a digit via a regex, so that test has to be rewritten.
-- Valid figures: 79 Terraform resources · 228 commits · 99 resources destroyed · USD 0.00 measured · 9.66 / 8.60 / 8.80 averages.
+- Valid figures: 79 Terraform resources · 83 commits (authored by Rodrigo) · 99 resources destroyed · USD 0.00 measured · 9.66 / 8.60 / 8.80 averages.
+- The Journal API figures live in `src/data/facts.ts`, and `scripts/verify-facts.mjs` proves them against the project repository. The commit count drifted once already, when other work landed in the same repository, so the numbers are no longer typed by hand. The published commit count is the one authored by Rodrigo, not the branch total: the branch started as a fork and carried other contributors and tooling, and a recruiter reading "N commits" on a portfolio reads it as "this person wrote N commits".
 
 ### Prohibited claims
 

@@ -25,6 +25,12 @@ jobs:
       - name: Verify the published CVs
         run: npm run sync-cv -- --check
 
+      # The Journal API numbers the site publishes. The project repository is
+      # not part of this one, so the check skips itself when it cannot find
+      # it — but locally it is what catches a number that drifted.
+      - name: Verify the published facts
+        run: npm run verify-facts
+
       - name: Build
         run: npm run build:dev
 

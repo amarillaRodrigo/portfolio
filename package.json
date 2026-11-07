@@ -4,9 +4,10 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/sync-cv.mjs --check && astro build",
+    "build": "node scripts/sync-cv.mjs --check && node scripts/verify-facts.mjs && astro build",
     "build:dev": "astro build",
     "sync-cv": "node scripts/sync-cv.mjs",
+    "verify-facts": "node scripts/verify-facts.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run",

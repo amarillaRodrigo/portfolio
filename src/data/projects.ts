@@ -1,4 +1,5 @@
 import type { CaseStudy } from "./types";
+import { journalApiFacts as facts } from "./facts";
 
 /**
  * The projects the site publishes.
@@ -27,8 +28,8 @@ export const projects: CaseStudy[] = [
       en: "Sole author — cloud engineering, infrastructure and pipeline",
     },
     status: {
-      es: "Desmontado el 06/11/2026. 99 recursos destruidos. No está corriendo en AWS.",
-      en: "Torn down on 06/11/2026. 99 resources destroyed. Not running on AWS.",
+      es: `Desmontado el 06/11/2026. ${facts.resourcesDestroyed} recursos destruidos. No está corriendo en AWS.`,
+      en: `Torn down on 06/11/2026. ${facts.resourcesDestroyed} resources destroyed. Not running on AWS.`,
     },
     tech: [
       {
@@ -37,7 +38,7 @@ export const projects: CaseStudy[] = [
       },
       {
         label: { es: "Infraestructura", en: "Infrastructure" },
-        value: "79 recursos de Terraform · EC2 t3.small con k3s · EKS",
+        value: `${facts.terraformResources} recursos de Terraform · EC2 t3.small con k3s · EKS`,
       },
       {
         label: { es: "Entrega", en: "Delivery" },
@@ -49,7 +50,7 @@ export const projects: CaseStudy[] = [
       },
       {
         label: { es: "Observabilidad", en: "Observability" },
-        value: "ADOT · OpenTelemetry · X-Ray · CloudWatch · 15 series de métricas",
+        value: `ADOT · OpenTelemetry · X-Ray · CloudWatch · ${facts.metricSeries} series de métricas`,
       },
       {
         label: { es: "Licencia", en: "Licence" },
@@ -137,12 +138,12 @@ export const projects: CaseStudy[] = [
         heading: { es: "Resultado", en: "Result" },
         body: {
           es: [
-            "228 commits. 79 recursos de Terraform. El deploy se verifica contra `/version`, que devuelve el SHA del commit: cuatro valores independientes —el commit local, el tag de la imagen en ECR, el tag que corre Kubernetes y el SHA que responde la API— tienen que coincidir exactamente, y el job falla si no.",
+            `${facts.commitsAuthored} commits. ${facts.terraformResources} recursos de Terraform. El deploy se verifica contra /version, que devuelve el SHA del commit: cuatro valores independientes —el commit local, el tag de la imagen en ECR, el tag que corre Kubernetes y el SHA que responde la API— tienen que coincidir exactamente, y el job falla si no.`,
             "La observabilidad no es un panel: ADOT sobre OTLP hacia X-Ray y CloudWatch, Fluent Bit para los logs de los pods, spans propios (`db.entries.*`, `llm.analyze_entry`), 15 series de métricas con p50 y p95, un dashboard, y alarmas de 5xx y de latencia hacia SNS. En AWS Config, 13 reglas gestionadas —8 de conformidad y 5 de amenaza— que evalúan la postura de la cuenta; la primera evaluación dio 3 hallazgos reales, que se cerraron.",
             "Y el teardown se hizo completo el 06/11/2026, después de que pasara la verificación de la plataforma y de que el responsable del proyecto lo confirmara explícitamente: 99 recursos destruidos por Terraform, 66 imágenes de ECR borradas, 6107 versiones de S3 eliminadas a mano y los recursos que vivían fuera del estado —presupuestos y parámetros de SSM— limpiados también. El procedimiento completo, con lo que se encontró y lo que no, quedó en `docs/cleanup.md`.",
           ],
           en: [
-            "228 commits. 79 Terraform resources. The deploy verifies against `/version`, which returns the commit SHA: four independent values — the local commit, the image tag in ECR, the tag Kubernetes is running and the SHA the API answers with — have to match exactly, and the job fails when they don't.",
+            `${facts.commitsAuthored} commits. ${facts.terraformResources} Terraform resources. The deploy verifies against /version, which returns the commit SHA: four independent values — the local commit, the image tag in ECR, the tag Kubernetes is running and the SHA the API answers with — have to match exactly, and the job fails when they don't.`,
             "The observability is not a dashboard: ADOT over OTLP into X-Ray and CloudWatch, Fluent Bit for pod logs, custom spans (`db.entries.*`, `llm.analyze_entry`), 15 metric series with p50 and p95, a dashboard, and alarms on 5xx rate and latency routed to SNS. In AWS Config, 13 managed rules — 8 conformity and 5 threat — evaluate the posture of the account; the first evaluation produced 3 real findings, and all three were closed.",
             "And the teardown was carried out in full on 06/11/2026, after the platform verification passed and the project owner confirmed it explicitly: 99 resources destroyed by Terraform, 66 ECR images deleted, 6107 S3 versions emptied by hand, and the resources living outside state — budgets and SSM parameters — cleaned up too. The full procedure, with what was found and what was not, is in `docs/cleanup.md`.",
           ],

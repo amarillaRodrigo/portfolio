@@ -59,8 +59,10 @@ src/
     robots.txt.ts
 scripts/
   sync-cv.mjs           Sincroniza y verifica los CV publicados
+  verify-facts.mjs      Comprueba las cifras del Journal API contra el proyecto
 tests/
   external-links.test.js    Todo enlace externo tiene que resolver
+  published-facts.test.js   Las cifras vienen del módulo de hechos, no a mano
   profile-info-content.test.js  Ninguna cifra sin fuente
 ```
 
@@ -94,6 +96,19 @@ npm run sync-cv -- --check # sólo verifica, sin copiar
 El script falla si el PDF no tiene 2 páginas, si no tiene capa de texto extraíble o si tiene un año unido a un guion Unicode. Si el repositorio hermano no está disponible, define `CV_SOURCE_DIR` con su ruta.
 
 `npm run build` ejecuta `sync-cv --check` antes de compilar: un CV roto no llega a producción.
+
+## Las cifras se comprueban, no se escriben
+
+Las del Journal API viven en `src/data/facts.ts` y `npm run verify-facts` las comprueba contra el proyecto real: los commits, los recursos de Terraform, las reglas de AWS Config y el registro del teardown.
+
+```bash
+npm run verify-facts                      # busca el repositorio del proyecto
+npm run verify-facts -- --repo <ruta>     # o indicar la ruta explícitamente
+```
+
+Existe porque el número de commits se quedó viejo una vez: entró otro trabajo en el mismo repositorio y el sitio siguió publicando la cifra anterior sin que nadie lo notara. El número que se publica es el de commits **escritos por Rodrigo**, no el total de la rama: la rama nació como un fork y arrastró otros colaboradores y tooling, y un recruiter que lee "N commits" en un portfolio lo lee como "esta persona escribió N commits".
+
+Si el repositorio del proyecto no está disponible, el script lo dice y sale con código 0: no se puede desmentir, y que falte un checkout hermano no es un sitio roto.
 
 ## Reglas del contenido
 
