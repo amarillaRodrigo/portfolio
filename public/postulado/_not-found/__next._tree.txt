@@ -1,4 +1,4 @@
 :HL["/postulado/_next/static/chunks/36wk-sd6hewrj.css","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"/_not-found","h":96,"c":"$Q2"}]]
-0:{"b":"rRBkNIOphLGKKP2d0CR1_","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"Gk9vG5n9wJA_QeCG2qjWp","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
