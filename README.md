@@ -26,9 +26,30 @@ Todo URL lleva su locale. No hay toggle por `localStorage`: las rutas son reales
 | `/es/proyectos/postulado/` | `/en/work/postulado/` | Caso de estudio: PostulaDo |
 | `/es/proyectos/task-tracker/` | `/en/work/task-tracker/` | Caso de estudio: Task Tracker |
 | `/es/contacto/` | `/en/contact/` | Contacto |
+| `/postulado/` | — | Landing de PostulaDo: export estático de Next.js que vive dentro del sitio |
 | `/sitemap.xml` | | Todas las rutas en los dos idiomas |
 | `/robots.txt` | | |
 | `/404.html` | | 404 real (Cloudflare Pages sirve el home para rutas inexistentes si no existe) |
+
+## La landing de PostulaDo vive acá
+
+`/postulado/` no es un iframe ni un redirect: es el **export estático** de la app
+Next.js del repositorio `PostulaDo`, copiado a `public/postulado/` y republicado
+con cada deploy. No necesita hosting propio ni servidor: es HTML plano con sus
+assets.
+
+El export se regenera desde el repo hermano:
+
+```bash
+cd ../PostulaDo/web
+STATIC_EXPORT=1 BASE_PATH=/postulado npm run build
+# copiar out/ a ../portfolio/public/postulado/
+```
+
+El `BASE_PATH` es lo que hace que los assets apunten a `/postulado/_next/…` en
+lugar de la raíz del sitio. La landing habla directo con la API por CORS, así que
+el análisis en vivo necesita la API desplegada y `NEXT_PUBLIC_API_URL` seteada
+en el build; sin eso, el formulario lo dice en vez de fingir.
 
 ## Estructura
 

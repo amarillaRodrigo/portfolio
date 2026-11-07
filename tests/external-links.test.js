@@ -23,15 +23,20 @@ const externalLinks = [
 const uniqueLinks = [...new Set(externalLinks)];
 
 /**
- * Hosts that block automated requests.
+ * Links that cannot be verified automatically.
  *
  * LinkedIn answers 999 to anything that is not a browser session, and it
  * answers 999 for a profile that does not exist too, so a status check cannot
  * tell a live profile from a dead one. These links are verified by hand and
  * listed here so the exclusion is deliberate rather than accidental.
  */
-const BOT_BLOCKED = [
+const NO_VERIFICABLE = [
   { host: "linkedin.com", reason: "returns 999 to non-browser clients" },
+  {
+    host: "rodrigoamarilla.tech/postulado/",
+    reason:
+      "ships in this same deploy: CI runs before Cloudflare Pages publishes, so the path cannot resolve until the deploy that carries it lands",
+  },
 ];
 
 /**
@@ -43,17 +48,17 @@ function isBrokenStatus(status) {
   return status === 404 || status === 410;
 }
 
-function isBotBlocked(href) {
-  return BOT_BLOCKED.some((entry) => href.includes(entry.host));
+function isNoVerificable(href) {
+  return NO_VERIFICABLE.some((entry) => href.includes(entry.host));
 }
 
 /** The excluded links, with the reason each one is excluded. */
-function botBlockedLinks() {
+function noVerificableLinks() {
   return uniqueLinks
-    .filter((href) => isBotBlocked(href))
+    .filter((href) => isNoVerificable(href))
     .map((href) => ({
       href,
-      reason: BOT_BLOCKED.find((entry) => href.includes(entry.host)).reason,
+      reason: NO_VERIFICABLE.find((entry) => href.includes(entry.host)).reason,
     }));
 }
 
@@ -85,7 +90,7 @@ describe("enlaces externos del sitio", () => {
   });
 
   it("todos los enlaces externos resuelven a un destino que existe", async () => {
-    const verifiable = uniqueLinks.filter((href) => !isBotBlocked(href));
+    const verifiable = uniqueLinks.filter((href) => !isNoVerificable(href));
 
     const results = await Promise.all(
       verifiable.map(async (href) => {
@@ -107,7 +112,7 @@ describe("enlaces externos del sitio", () => {
       console.warn(`  ⚠ no se pudo verificar ${u.href} (sin red)`);
     }
 
-    for (const b of botBlockedLinks()) {
+    for (const b of noVerificableLinks()) {
       console.warn(`  ⚠ ${b.href} no se puede verificar automáticamente: ${b.reason}`);
     }
 
@@ -174,9 +179,15 @@ describe("proyectos publicados", () => {
     const withDemo = projects.filter((p) =>
       p.links.some((l) => l.kind === "demo"),
     );
-    // There is exactly one live demo on this site, and it is verified. A
-    // second one would need to be checked before it goes up.
-    expect(withDemo.map((p) => p.slug)).toEqual(["task-tracker"]);
+    // Two live demos: the Task Tracker app, and the PostulaDo landing — which
+    // ships inside this same site, under /postulado/. The second one was
+    // checked before going up: the exported build was served from this
+    // repository's own dist/ and the page, its assets and its first viewport
+    // were verified there.
+    expect(withDemo.map((p) => p.slug).sort()).toEqual([
+      "postulado",
+      "task-tracker",
+    ]);
   });
 
   it("cada proyecto tiene las cinco secciones del caso de estudio", () => {

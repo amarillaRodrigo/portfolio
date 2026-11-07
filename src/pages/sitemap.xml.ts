@@ -21,6 +21,10 @@ export const GET: APIRoute = () => {
     }
   }
 
+  // The PostulaDo landing is a static export that ships inside this site, at
+  // /postulado/. It is not localised: it is one page in Spanish.
+  paths.push("/postulado/");
+
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${paths

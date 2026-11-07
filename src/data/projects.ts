@@ -183,30 +183,35 @@ export const projects: CaseStudy[] = [
     slug: "postulado",
     name: "PostulaDo",
     year: "2026",
-    tags: ["NestJS", "Prisma", "BullMQ", "SGLang", "PostgreSQL"],
+    tags: ["NestJS", "Next.js", "SGLang", "BullMQ", "PostgreSQL"],
     tagline: {
-      es: "API de postulaciones laborales con análisis estructurado de ofertas y salida validada contra esquema.",
-      en: "A job-application API with structured offer analysis and schema-validated output.",
+      es: "Del lote de ofertas al plan de estudio: qué oficios pide el mercado y por cuál entrar.",
+      en: "From a batch of postings to a study plan: which roles the market asks for and how to enter them.",
     },
     summary: {
-      es: "API NestJS para gestionar postulaciones: analiza ofertas con un modelo de lenguaje, devuelve una estructura validada y regenera cada sección por separado. Prisma sobre PostgreSQL, colas con BullMQ y Redis, y una suite e2e contra PostgreSQL y Redis reales en Docker Compose.",
-      en: "A NestJS API for managing job applications: it analyses postings with a language model, returns a validated structure, and regenerates each section independently. Prisma over PostgreSQL, queues on BullMQ and Redis, and an e2e suite against real PostgreSQL and Redis in Docker Compose.",
+      es: "El problema no es aprender una herramienta: es aprender la correcta. PostulaDo toma un lote de ofertas, las agrupa por el tipo de trabajo que comparten, extrae los oficios que las cubren con su cobertura real sobre ese lote, y devuelve las alternativas de cada uno para no atar a nadie a un vendor. Backend NestJS con Prisma sobre PostgreSQL, colas BullMQ sobre Redis y extracción estructurada con SGLang; frontend Next.js estático que habla directo con la API.",
+      en: "The problem is not learning a tool: it is learning the right one. PostulaDo takes a batch of postings, groups them by the kind of work they share, extracts the disciplines they cover with their real coverage over that batch, and returns alternatives for each so nobody is locked into one vendor. NestJS backend with Prisma over PostgreSQL, BullMQ queues on Redis and structured extraction with SGLang; a static Next.js frontend talks to the API directly.",
     },
     role: {
-      es: "Autor del proyecto — backend",
-      en: "Sole author — backend",
+      es: "Autor del proyecto — backend y frontend",
+      en: "Sole author — backend and frontend",
     },
     status: {
       es: "Implementación de referencia pública. Código abierto.",
       en: "Public reference implementation. Open source.",
     },
     tech: [
-      { label: { es: "Framework", en: "Framework" }, value: "NestJS · TypeScript" },
+      { label: { es: "Framework", en: "Framework" }, value: "NestJS · Next.js · TypeScript" },
       { label: { es: "Datos", en: "Data" }, value: "Prisma · PostgreSQL · Redis" },
       {
         label: { es: "Análisis",
           en: "Analysis" },
         value: "SGLang (XGrammar, RadixAttention) · Cheerio",
+      },
+      {
+        label: { es: "Dominio",
+          en: "Domain" },
+        value: "Taxonomía de 8 oficios con alternativas por tema",
       },
       { label: { es: "Colas", en: "Queues" }, value: "BullMQ · Redis" },
       {
@@ -221,60 +226,70 @@ export const projects: CaseStudy[] = [
       },
     ],
     architecture: {
-      es: `  Cliente HTTP
+      es: `  Lote de URLs
       │
       ▼
   ┌─────────────────────────────────────────────┐
   │ API NestJS                                 │
   │  ─ AuthModule (JWT + Passport + Roles)      │
   │  ─ UsersModule (ownership por recurso)     │
-  │  ─ ApplicationsModule (CRUD)                │
-  │  ─ AnalysisModule                           │
+  │  ─ PostulacionesModule (CRUD + lote)        │
+  │  ─ AnálisisModule                           │
   │     ├─ BullMQ producer (URL → job)          │
   │     └─ BullMQ worker                        │
   │         ├─ Scraping con Cheerio             │
-  │         ├─ Extracción estructurada SGLang   │
-  │         └─ Cover letter + CV + foco         │
+  │         └─ Extracción estructurada SGLang   │
+  │  ─ Taxonomía (8 oficios + alternativas)      │
   └─────────────────────────────────────────────┘
       │                    │
       ▼                    ▼
   PostgreSQL           Redis + BullMQ
      (Prisma)              │
-                           ▼
-                     Inferencia SGLang`,
-      en: `  HTTP client
+                          ▼
+                    Inferencia SGLang
+
+  ┌─────────────────────────────────────────────┐
+  │ Frontend Next.js (estático)                 │
+  │  encolar → poll → guardar → analizar el lote │
+  └─────────────────────────────────────────────┘`,
+      en: `  Batch of URLs
       │
       ▼
   ┌─────────────────────────────────────────────┐
-  │ NestJS API                                 │
+  │ NestJS API                                  │
   │  ─ AuthModule (JWT + Passport + Roles)      │
-  │  ─ UsersModule (per-resource ownership)     │
-  │  ─ ApplicationsModule (CRUD)                │
-  │  ─ AnalysisModule                           │
+  │  ─ UsersModule (ownership por recurso)     │
+  │  ─ PostulacionesModule (CRUD + lote)        │
+  │  ─ AnálisisModule                           │
   │     ├─ BullMQ producer (URL → job)          │
   │     └─ BullMQ worker                        │
-  │         ├─ Scraping with Cheerio            │
-  │         ├─ Structured SGLang extraction     │
-  │         └─ Cover letter + CV + focus        │
+  │         ├─ Scraping con Cheerio             │
+  │         └─ Extracción estructurada SGLang   │
+  │  ─ Taxonomía (8 oficios + alternativas)      │
   └─────────────────────────────────────────────┘
       │                    │
       ▼                    ▼
   PostgreSQL           Redis + BullMQ
      (Prisma)              │
-                           ▼
-                     SGLang inference`,
+                          ▼
+                    Inferencia SGLang
+
+  ┌─────────────────────────────────────────────┐
+  │ Frontend Next.js (estático)                 │
+  │  encolar → poll → guardar → analizar el lote │
+  └─────────────────────────────────────────────┘`,
     },
     sections: [
       {
         heading: { es: "Problema", en: "Problem" },
         body: {
           es: [
-            "Postularse a una oferta es trabajo repetitivo: reformatear el CV, redactar una carta, resaltar la experiencia relevante. La mayoría de las herramientas esconden el modelo detrás de una caja negra y devuelven un párrafo genérico que no se puede auditar.",
-            "El reto fue diseñar un backend donde el usuario pueda inspeccionar lo que el modelo extrajo, regenerar cada sección de forma independiente y mantener el control sobre los datos subyacentes.",
+            "Estudiar sin saber qué se pide es caro. Un profesional junior abre diez ofertas, ve diez listas de herramientas distintas y no sabe si el 10% o el 70% de lo que estudia le va a servir. Lo que hay en el mercado no es difícil de encontrar: está desperdigado en cada posting, y separado no dice nada.",
+            "El reto no era resumir una oferta: era comparar un lote entero y sacar de ahí el plan de estudio. Y hacerlo sin mentir —cada porcentaje tiene que poder auditarse contra las ofertas que lo produjeron.",
           ],
           en: [
-            "Applying to a job posting is repetitive work: reformat the CV, write the cover letter, surface the relevant experience. Most tools hide the model behind a black box and return a generic paragraph you cannot audit.",
-            "The challenge was a backend where the user can inspect what the model extracted, regenerate each section independently, and stay in control of the underlying data.",
+            "Studying without knowing what is being asked for is expensive. A junior opens ten postings, sees ten different tool lists and cannot tell whether 10% or 70% of what they study will matter. The market information is not hard to find: it is scattered across every posting, and scattered it says nothing.",
+            "The challenge was not to summarise one posting: it was to compare a whole batch and derive the study plan from it. And to do it without lying —every percentage has to be auditable against the postings that produced it.",
           ],
         },
       },
@@ -283,13 +298,13 @@ export const projects: CaseStudy[] = [
         body: {
           es: [
             "Una API NestJS con arquitectura en capas. La capa de auth resuelve JWT con Passport, guards por rol y un ownership check en cada recurso por usuario: los roles y la propiedad son ejes separados, y un admin no es el dueño de un recurso.",
-            "El esquema de Prisma sobre PostgreSQL es la única fuente de verdad, y la API lo refleja. Todo lo que no necesita estar en el camino del request —llamadas al modelo, scraping, generación de reportes— va a una cola de BullMQ con Redis, que escala de forma independiente del endpoint.",
-            "Y la capa del modelo devuelve un payload tipado —tecnologías, responsabilidades, años de experiencia, tono de la empresa— que se valida contra un esquema antes de consumirse. Entrada basura se rechaza, no se muestra.",
+            "La clave está en una taxonomía: 36 tecnologías mapeadas a 8 oficios —pruebas, integración y entrega, nube, contenedores, datos, caché, backend, frontend— y cada oficio con las alternativas que lo cubren. El plan no dice \"aprendé AWS\": dice \"despliegue en la nube\" y ofrece AWS, Azure, GCP y Cloudflare. El denominador es siempre el lote, no el historial entero del usuario: un porcentaje sin el conjunto al que corresponde no significa nada.",
+            "Y todo lo que no necesita estar en el camino del request —scraping, extracción, inferencia— va a una cola de BullMQ con Redis. El frontend es una app Next.js estática que encola, espera y consulta el análisis del lote; no hay proxy: habla directo con la API.",
           ],
           en: [
             "A NestJS API with layered architecture. The auth layer handles JWT through Passport, role guards and an ownership check on every per-user resource: roles and ownership are separate axes, and an admin is not the owner of a record.",
-            "The Prisma schema over PostgreSQL is the single source of truth, and the API reflects it. Everything that does not need to be in the request path — model calls, scraping, report generation — goes to a BullMQ queue on Redis, which scales independently of the endpoint.",
-            "And the model layer returns a typed payload — technologies, responsibilities, years of experience, company tone — validated against a schema before it is consumed. Garbage input is rejected, not displayed.",
+            "The key is a taxonomy: 36 technologies mapped to 8 disciplines —testing, delivery, cloud, containers, data, caching, backend, frontend— and each discipline with the alternatives that cover it. The plan does not say \"learn AWS\": it says \"cloud deployment\" and offers AWS, Azure, GCP and Cloudflare. The denominator is always the batch, not the user's whole history: a percentage without the set it belongs to means nothing.",
+            "And everything that does not need to be in the request path —scraping, extraction, inference— goes to a BullMQ queue on Redis. The frontend is a static Next.js app that enqueues, waits and queries the batch analysis; there is no proxy: it talks to the API directly.",
           ],
         },
       },
@@ -297,12 +312,12 @@ export const projects: CaseStudy[] = [
         heading: { es: "Resultado", en: "Result" },
         body: {
           es: [
-            "El usuario pega una URL y obtiene un desglose estructurado de la oferta en forma tipada, no un párrafo. La carta, la optimización del CV y el reporte de foco se regeneran en forma independiente: no hay que re-ejecutar el pipeline completo para cambiar una sección.",
-            "Un interceptor global elimina el campo de contraseña de toda respuesta pública, así que la corrección está en el cable y no en cada controller. Y los tests de auth y ownership cubren los caminos por usuario contra PostgreSQL y Redis reales en Docker Compose, con GitHub Actions bloqueando cada merge.",
+            "El usuario pega cinco ofertas y recibe un plan: el tipo de trabajo que comparten, los oficios que las cubren con su cobertura sobre ese lote, y por cuál entrar. No treinta y seis herramientas: los pocos temas que de verdad importan, con alternativas para no quedar atado a un vendor.",
+            "El análisis corre en background: el frontend encola, sigue trabajando y consulta el estado hasta que el lote está listo. Y la landing es estática —se publica dentro de este mismo portfolio— así que no necesita servidor propio para existir.",
           ],
           en: [
-            "The user pastes a URL and gets a typed breakdown of the posting rather than a paragraph. The cover letter, the CV tailoring and the focus report each regenerate independently: there is no need to re-run the whole pipeline to change one section.",
-            "A global interceptor strips the password field from every public response, so the fix lives on the wire rather than in every controller. And the auth and ownership tests cover the per-user paths against real PostgreSQL and Redis in Docker Compose, with GitHub Actions gating every merge.",
+            "The user pastes five postings and gets a plan: the kind of work they share, the disciplines that cover them with their coverage over that batch, and how to enter each. Not thirty-six tools: the few themes that actually matter, with alternatives so nobody is locked to a vendor.",
+            "The analysis runs in the background: the frontend enqueues, keeps working and polls the status until the batch is ready. And the landing is static —it ships inside this same portfolio— so it does not need its own server to exist.",
           ],
         },
       },
@@ -310,12 +325,14 @@ export const projects: CaseStudy[] = [
         heading: { es: "Límites conocidos", en: "Known limits" },
         body: {
           es: [
-            "El modelo de lenguaje se ejecuta en una infraestructura externa y el resultado depende de ella: el esquema valida la forma, no la veracidad de lo que el modelo afirma sobre la oferta. Un payload bien formado puede resumir mal la vacante.",
-            "El scraping es deliberadamente simple: texto plano de una URL pública. No hay navegador headless, así que las ofertas que sólo existen detrás de JavaScript en el cliente no se leen.",
+            "La taxonomía es una tabla fija: 36 tecnologías mapeadas a 8 oficios. No descubre oficios nuevos, y una tecnología que no esté en la tabla no entra en ninguna cobertura. Es deliberado —un plan auditable vale más que uno que se inventa— pero es un límite real.",
+            "El tipo de trabajo se detecta por la firma de temas, no por un modelo: es heurístico y puede equivocar el nombre del oficio aunque los porcentajes sean correctos.",
+            "El scraping sigue siendo texto plano de una URL pública. Sin navegador headless, las ofertas que sólo existen detrás de JavaScript en el cliente no se leen.",
           ],
           en: [
-            "The language model runs on external infrastructure and the result depends on it: the schema validates shape, not the truth of what the model claims about the posting. A well-formed payload can still summarise the role wrongly.",
-            "The scraping is deliberately simple: plain text from a public URL. There is no headless browser, so listings that only exist behind client-side JavaScript are not read.",
+            "The taxonomy is a fixed table: 36 technologies mapped to 8 disciplines. It does not discover new disciplines, and a technology that is not in the table enters no coverage. That is deliberate —an auditable plan is worth more than an invented one— but it is a real limit.",
+            "The kind of work is detected by the signature of themes, not by a model: it is heuristic and can misname the discipline even when the percentages are right.",
+            "Scraping is still plain text from a public URL. With no headless browser, listings that only exist behind client-side JavaScript are not read.",
           ],
         },
       },
@@ -326,6 +343,11 @@ export const projects: CaseStudy[] = [
         label: { es: "Ver el repositorio", en: "View the repository" },
         kind: "repo",
         primary: true,
+      },
+      {
+        href: "https://rodrigoamarilla.tech/postulado/",
+        label: { es: "Ver la landing", en: "View the landing" },
+        kind: "demo",
       },
     ],
   },
