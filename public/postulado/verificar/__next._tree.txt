@@ -2,4 +2,4 @@
 :HL["/postulado/_next/static/media/605ce01b664af129-s.p.0wgildi0cnwt9.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"verificar","h":96,"c":"$Q2"}]]
-0:{"b":"kXyTl6OVBwr5H2cngg96A","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"pn138JYq1Z-g3RfFkIWa9","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
